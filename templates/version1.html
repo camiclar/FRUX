@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITW 10-K - Version 1 (Original SEC Format)</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body style="margin: 0; padding: 0;">
+    <!-- Original head content from index.html -->
+    {% include 'fragments/head.html' %}
+    
+    <!-- Original body content -->
+    {% include 'fragments/header.html' %}
+    {% include 'fragments/contents.html' %}
+    {% include 'fragments/part1.html' %}
+    {% include 'fragments/part2.html' %}
+    {% include 'fragments/part3.html' %}
+    {% include 'fragments/part4.html' %}
+    
+    <!-- Closing tags -->
+    {% include 'fragments/closing.html' %}
+</body>
+</html>

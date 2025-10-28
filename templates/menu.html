@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITW 10-K Document Viewer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        
+        .description {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .version-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .version-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-decoration: none;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100px;
+        }
+        
+        .version-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .version-card.available {
+            opacity: 1;
+            cursor: pointer;
+        }
+        
+        .version-card.coming-soon {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .version-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .version-title {
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        .version-desc {
+            font-size: 0.75em;
+            opacity: 0.9;
+ ГО
+        
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 ITW 10-K Document Viewer</h1>
+        <p class="subtitle">Illinois Tool Works Inc. - Annual Report 2024</p>
+        
+        <div class="description">
+            <strong>What is this?</strong><br>
+            This is an interactive viewer for the Illinois Tool Works SEC Form 10-K filing. 
+            Version 1 shows the document as it appears on the SEC website. Future versions will include 
+            enhancements like floating navigation, pagination, and other UX improvements.
+        </div>
+        
+        <h2 style="margin-bottom: 20px;">Select Version:</h2>
+        
+        <div class="version-grid">
+            <a href="/version/1" class="version-card available">
+                <div class="version-number">1</div>
+                <div class="version-title">Original SEC Format</div>
+                <div class="version-desc">Current • Available</div>
+            </a>
+            
+            <div class="version-card coming-soon">
+                <div class="version-number">2</div>
+                <div class="version-title">With Floating Nav</div>
+                <div class="version-desc">Coming Soon</div>
+            </div>
+            
+            <div class="version-card coming-soon">
+                <div class="version-number">3</div>
+                <div class="version-title">With Pagination</div>
+                <div class="version-desc">Coming Soon</div>
+            </div>
+            
+            <div class="version-card coming-soon">
+                <div class="version-number">4</div>
+                <div class="version-title">Feature 4</div>
+                <div class="version-desc">Coming Soon</div>
+            </div>
+            
+            <div class="version-card coming-soon">
+                <div class="version-number">5</div>
+                <div class="version-title">Feature 5</div>
+                <div class="version-desc">Coming Soon</div>
+            </div>
+            
+            <div class="version-card coming-soon">
+                <div class="version-number">6</div>
+                <div class="version-title">Feature 6</div>
+                <div class="version-desc">Coming Soon</div>
+            </div>
+            
+            <div class="version-card coming-soon">
+                <div class="version-number">7</div>
+                <div class="version-title">Feature 7</div>
+                <div class="version-desc">Coming Soon</div>
+            </div>
+            
+            <div class="version-card coming-soon">
+                <div class="version-number">8</div>
+                <div class="version-title">Feature 8</div>
+                <div class="version-desc">Coming Soon</div>
+            </div>
+            
+            <div class="version-card coming-soon">
+                <div class="version-number">9</div>
+                <div class="version-title">Feature 9</div>
+                <div class="version-desc">Coming Soon</div>
+            </div>
+            
+            <div class="version-card coming-soon">
+                <div class="version-number">10</div>
+                <div class="version-title">All Features</div>
+                <div class="version-desc">Coming Soon</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>ℹ️ Version 1 contains the complete SEC Form 10-K filing for Illinois Tool Works Inc. for the fiscal year ended December 31, 2024.</p>
+        </div>
+    </div>
+</body>
+</html>
+
