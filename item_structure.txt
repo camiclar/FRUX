@@ -1,0 +1,11 @@
+Item Structure Analysis
+==================================================
+
+Title page: 231,692 chars (extracted from header.html)
+Table of Contents: contents.html (already exists)
+Item content: Located in part4.html (870,597 chars)
+
+Item to ID mapping:
+  Item 1A -> ID 10
+  Item 1C -> ID 10
+  Item 8 -> ID 10
