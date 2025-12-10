@@ -7,9 +7,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body style="margin: 0; padding: 0;">
-    <!-- Original head content from index.html -->
-    {% include 'fragments/head.html' %}
-    
     <!-- Original body content -->
     {% include 'fragments/title_page.html' %}
     {% include 'fragments/contents.html' %}
@@ -29,8 +26,5 @@
     {% include 'fragments/item_14.html' %}
     {% include 'fragments/item_15.html' %}
     {% include 'fragments/item_16.html' %}
-    
-    <!-- Closing tags -->
-    {% include 'fragments/closing.html' %}
 </body>
 </html>
