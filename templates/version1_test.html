@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITW 10-K - Version 1 (Test - New Fragment System)</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/version1.css') }}">
+</head>
+<body style="margin: 0; padding: 0;">
+    {% from 'macros/fragment_macros.html' import render_fragment %}
+    
+    {% for fragment in fragments %}
+        {# Debug: Check if page_breaks exists and has values #}
+        {% if fragment.id == 'item_1_general' %}
+        <!-- DEBUG: fragment.page_breaks = {{ fragment.page_breaks }}, length = {{ fragment.page_breaks|length }} -->
+        {% endif %}
+        {{ render_fragment(fragment, version='1') }}
+    {% endfor %}
+</body>
+</html>

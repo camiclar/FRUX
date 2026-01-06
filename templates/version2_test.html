@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITW 10-K - Version 2 (Test - No Page Numbers)</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/version2.css') }}">
+</head>
+<body style="margin: 0; padding: 0;">
+    {% from 'macros/fragment_macros.html' import render_fragment %}
+    
+    {% for fragment in fragments %}
+        {{ render_fragment(fragment, version='2') }}
+    {% endfor %}
+</body>
+</html>
+

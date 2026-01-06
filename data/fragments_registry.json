@@ -1,0 +1,158 @@
+{
+  "fragments": [
+    {
+      "id": "title_page",
+      "file": "title_page.html",
+      "title": "Title Page",
+      "item": null,
+      "order": 1,
+      "page_numbers": [1],
+      "page_breaks": []
+    },
+    {
+      "id": "table_of_contents",
+      "file": "table_of_contents.html",
+      "title": "Table of Contents",
+      "item": null,
+      "order": 2,
+      "page_numbers": [2],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1_general",
+      "file": "item_1_general.html",
+      "title": "Item 1 - General",
+      "item": "1",
+      "order": 3,
+      "page_numbers": [2, 3],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1_business_model",
+      "file": "item_1_business_model.html",
+      "title": "Item 1 - The ITW Business Model",
+      "item": "1",
+      "order": 4,
+      "page_numbers": [3, 4],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1_enterprise_strategy",
+      "file": "item_1_enterprise_strategy.html",
+      "title": "Item 1 - Enterprise Strategy: 2012 - 2023",
+      "item": "1",
+      "order": 5,
+      "page_numbers": [4],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1_next_phase",
+      "file": "item_1_next_phase.html",
+      "title": "Item 1 - Our Next Phase: 2024 - 2030",
+      "item": "1",
+      "order": 6,
+      "page_numbers": [4, 5],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1_portfolio_discipline",
+      "file": "item_1_portfolio_discipline.html",
+      "title": "Item 1 - Portfolio Discipline",
+      "item": "1",
+      "order": 7,
+      "page_numbers": [5],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1_current_year_developments",
+      "file": "item_1_current_year_developments.html",
+      "title": "Item 1 - Current Year Developments",
+      "item": "1",
+      "order": 8,
+      "page_numbers": [5, 6],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1_distribution_methods",
+      "file": "item_1_distribution_methods.html",
+      "title": "Item 1 - Distribution Methods",
+      "item": "1",
+      "order": 9,
+      "page_numbers": [6],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1_backlog",
+      "file": "item_1_backlog.html",
+      "title": "Item 1 - Backlog",
+      "item": "1",
+      "order": 10,
+      "page_numbers": [6],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1_competition",
+      "file": "item_1_competition.html",
+      "title": "Item 1 - Competition",
+      "item": "1",
+      "order": 11,
+      "page_numbers": [6],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1_raw_materials",
+      "file": "item_1_raw_materials.html",
+      "title": "Item 1 - Raw Materials",
+      "item": "1",
+      "order": 12,
+      "page_numbers": [6],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1_intellectual_property",
+      "file": "item_1_intellectual_property.html",
+      "title": "Item 1 - Intellectual Property",
+      "item": "1",
+      "order": 13,
+      "page_numbers": [6, 7],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1_government_regulations",
+      "file": "item_1_government_regulations.html",
+      "title": "Item 1 - Government Regulations",
+      "item": "1",
+      "order": 14,
+      "page_numbers": [7],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1_human_capital_management",
+      "file": "item_1_human_capital_management.html",
+      "title": "Item 1 - Human Capital Management",
+      "item": "1",
+      "order": 15,
+      "page_numbers": [7, 8],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1_executive_officers",
+      "file": "item_1_executive_officers.html",
+      "title": "Item 1 - Information About Our Executive Officers",
+      "item": "1",
+      "order": 16,
+      "page_numbers": [8],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1_available_information",
+      "file": "item_1_available_information.html",
+      "title": "Item 1 - Available Information",
+      "item": "1",
+      "order": 17,
+      "page_numbers": [8, 9],
+      "page_breaks": []
+    }
+  ]
+}
+

@@ -1,0 +1,64 @@
+{# Fragment rendering macros for different versions #}
+
+{% macro render_fragment(fragment, version='1') %}
+  {% if version == '1' %}
+    {# Version 1: Include page numbers and horizontal lines #}
+    {# Special handling for title_page and table_of_contents - they have their own styling #}
+    {% if fragment.id == 'title_page' or fragment.id == 'table_of_contents' %}
+      {# Include from fragments directory #}
+      {% include 'fragments/' + fragment.file %}
+    {% else %}
+      <section class="fragment" 
+               data-fragment-id="{{ fragment.id }}"
+               {% if fragment.page_numbers %}data-page-start="{{ fragment.page_numbers[0] }}"{% endif %}
+               {% if fragment.page_breaks %}data-page-end="{{ fragment.page_breaks[-1] }}"{% endif %}>
+        {% set content = fragment.file %}
+        {% include 'data/fragments/' + content %}
+        
+        {# Render page number if this fragment ends a page #}
+        {# Only add page break if page_breaks array has values #}
+        {% if fragment.page_breaks and fragment.page_breaks|length > 0 %}
+          <div class="page-number">
+            <div class="page-number-content">{{ fragment.page_breaks[-1] }}</div>
+          </div>
+          <hr class="page-break page-break-line"/>
+        {% endif %}
+      </section>
+    {% endif %}
+  {% elif version == '2' %}
+    {# Version 2: No page numbers, enhanced styling #}
+    {# Special handling for title_page and table_of_contents - they have their own styling #}
+    {% if fragment.id == 'title_page' or fragment.id == 'table_of_contents' %}
+      {% include 'fragments/' + fragment.file %}
+    {% else %}
+      <section class="fragment" 
+               data-fragment-id="{{ fragment.id }}"
+               id="{{ fragment.id }}">
+        <h2 class="fragment-title">{{ fragment.title }}</h2>
+        <div class="fragment-content">
+          {% include 'data/fragments/' + fragment.file %}
+        </div>
+      </section>
+    {% endif %}
+  {% else %}
+    {# Default: Just include the fragment #}
+    <section class="fragment" data-fragment-id="{{ fragment.id }}">
+      {% include 'data/fragments/' + fragment.file %}
+    </section>
+  {% endif %}
+{% endmacro %}
+
+{# Helper macro to render page number at specific location within fragment #}
+{% macro page_number(number) %}
+  <div class="page-number">
+    <div class="page-number-content">{{ number }}</div>
+  </div>
+{% endmacro %}
+
+{# Helper macro to render page break with horizontal line #}
+{% macro page_break(number=None) %}
+  {% if number %}
+    {{ page_number(number) }}
+  {% endif %}
+  <hr class="page-break page-break-line"/>
+{% endmacro %}

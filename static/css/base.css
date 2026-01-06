@@ -1,0 +1,174 @@
+/* Base Styles - Semantic CSS Classes */
+
+/* Typography */
+.body-text {
+  color: #000000;
+  font-family: 'Times New Roman', sans-serif;
+  font-size: 10pt;
+  font-weight: 400;
+  line-height: 120%;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 18.6667px;
+}
+
+.heading-1 {
+  color: #000000;
+  font-family: 'Times New Roman', sans-serif;
+  font-size: 10pt;
+  font-weight: 700;
+  line-height: 120%;
+  margin: 0;
+  padding: 0;
+  margin-top: 18.6667px;
+  margin-bottom: 18.6667px;
+}
+
+.heading-2 {
+  color: #000000;
+  font-family: 'Times New Roman', sans-serif;
+  font-size: 10pt;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 120%;
+  margin: 0;
+  padding: 0;
+  margin-top: 18.6667px;
+  margin-bottom: 0;
+  display: inline;
+}
+
+/* Paragraphs that follow heading-2 and start with em dash should be inline */
+.heading-2 + .body-text {
+  display: inline;
+  margin-left: 0.5em;
+  margin-top: 0;
+  margin-bottom: 18.6667px;
+}
+
+.part-heading {
+  color: #000000;
+  font-family: 'Times New Roman', sans-serif;
+  font-size: 10pt;
+  font-weight: 700;
+  line-height: 120%;
+  text-align: center;
+  text-decoration: underline;
+  margin: 0;
+  padding: 0;
+  margin-top: 18.6667px;
+  margin-bottom: 18.6667px;
+}
+
+.item-heading {
+  color: #000000;
+  font-family: 'Times New Roman', sans-serif;
+  font-size: 10pt;
+  font-weight: 700;
+  line-height: 120%;
+  margin: 0;
+  padding: 0;
+  margin-top: 18.6667px;
+  margin-bottom: 18.6667px;
+}
+
+.item-number {
+  font-weight: 700;
+  font-style: normal;
+}
+
+.item-title {
+  font-weight: 700;
+  font-style: italic;
+}
+
+.section-heading {
+  color: #000000;
+  font-family: 'Times New Roman', sans-serif;
+  font-size: 10pt;
+  font-weight: 700;
+  line-height: 120%;
+  margin: 0;
+  padding: 0;
+  margin-top: 18.6667px;
+  margin-bottom: 18.6667px;
+}
+
+/* Spacing */
+.spacing-br {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+/* Lists */
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 18.6667px;
+  margin-top: 18.6667px;
+  font-size: 10pt;
+}
+
+.list-item {
+  padding-left: 36pt;
+  text-indent: -18pt;
+  margin: 0;
+}
+
+.list-item-indent-2 {
+  padding-left: 36pt;
+  text-indent: -22.5pt;
+}
+
+.list-item-content {
+  padding-left: 14.5pt;
+  display: inline;
+}
+
+.list-item-content-indent-2 {
+  padding-left: 19pt;
+}
+
+.list-bullet {
+  color: #000000;
+  font-family: 'Times New Roman', sans-serif;
+  font-size: 10pt;
+  font-weight: 400;
+  line-height: 120%;
+  display: inline;
+}
+
+/* Indentation */
+.indent-1 {
+  padding-left: 36pt;
+}
+
+.indent-2 {
+  padding-left: 54pt;
+}
+
+/* Fragments */
+.fragment {
+  display: block;
+}
+
+/* Tables */
+.table-cell {
+  padding: 2px 1pt;
+}
+
+.table-header {
+  background-color: #cceeff;
+  font-weight: 700;
+}
+
+.table-row-alt {
+  background-color: #ffffff;
+}
+
+.table-row-primary {
+  background-color: #cceeff;
+}
+
