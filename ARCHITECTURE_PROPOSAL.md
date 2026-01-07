@@ -10,7 +10,7 @@
 ## Solution: Three-Layer Architecture
 
 ### Layer 1: Content (Data)
-**Location**: `data/fragments/`
+**Location**: `templates/data/fragments/`
 
 - **Pure semantic HTML** - no inline styles, no page numbers
 - **CSS classes only** - semantic class names like `.heading-1`, `.paragraph`, `.list-item`

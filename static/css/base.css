@@ -1,5 +1,12 @@
 /* Base Styles - Semantic CSS Classes */
 
+body {
+  margin: 0;
+  padding: 0 5px; /* Changed from 50px to 5px to match original site */
+  width: 100%;
+  box-sizing: border-box;
+}
+
 /* Typography */
 .body-text {
   color: #000000;
@@ -21,7 +28,7 @@
   margin: 0;
   padding: 0;
   margin-top: 18.6667px;
-  margin-bottom: 18.6667px;
+  /* margin-bottom: 18.6667px; */
 }
 
 .heading-2 {
@@ -38,12 +45,16 @@
   display: inline;
 }
 
+.no-bold {
+  font-weight: 400 !important;
+}
+
 /* Paragraphs that follow heading-2 and start with em dash should be inline */
 .heading-2 + .body-text {
   display: inline;
   margin-left: 0.5em;
   margin-top: 0;
-  margin-bottom: 18.6667px;
+  /* margin-bottom: 18.6667px; */
 }
 
 .part-heading {
@@ -160,7 +171,6 @@
 }
 
 .table-header {
-  background-color: #cceeff;
   font-weight: 700;
 }
 

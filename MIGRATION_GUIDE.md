@@ -105,7 +105,7 @@ Create a script to:
 2. Copy content between boundaries
 3. Replace inline styles with classes
 4. Remove page numbers
-5. Save to `data/fragments/`
+5. Save to `templates/data/fragments/`
 6. Update registry
 
 ## Example: Complete Transformation
@@ -134,7 +134,7 @@ Create a script to:
 <hr style="page-break-after:always"/>
 ```
 
-**New (`data/fragments/item_1_general.html`):**
+**New (`templates/data/fragments/item_1_general.html`):**
 ```html
 <h2 class="section-heading">General</h2>
 <p class="body-text">Illinois Tool Works Inc...</p>

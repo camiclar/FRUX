@@ -2,14 +2,12 @@
 
 /* Override to match SEC site - no margins, edge to edge */
 html, body {
-    margin: 0 !important;
-    padding: 0 !important;
     width: 100%;
 }
 
 /* Force all tables to use full width and remove inline-table constraints */
 table {
-    width: 100% !important;
+    width: 100%;
     max-width: none !important;
 }
 

@@ -9,7 +9,7 @@
 
 ## The Solution: Three-Layer Architecture
 
-### 1. Content Layer (`data/fragments/`)
+### 1. Content Layer (`templates/data/fragments/`)
 **Pure semantic HTML** - no inline styles, no page numbers
 
 **Example:**
@@ -123,7 +123,7 @@
 1. **Extract fragment** from current HTML (lines 18-456)
 2. **Remove inline styles** → Replace with CSS classes
 3. **Remove page numbers** → Store in registry
-4. **Save to** `data/fragments/item_1_general.html`
+4. **Save to** `templates/data/fragments/item_1_general.html`
 5. **Update registry** with page number info
 6. **Test Version 1** - should match SEC site
 7. **Test Version 2** - no page numbers, enhanced UX
@@ -142,11 +142,13 @@
 ```
 FRUX/
 ├── data/
-│   ├── fragments/
-│   │   ├── item_1_general.html      # Clean content
-│   │   ├── item_1_business_model.html
-│   │   └── ...
 │   └── fragments_registry.json      # Metadata
+├── templates/
+│   ├── data/
+│   │   └── fragments/
+│   │       ├── item_1_general.html      # Clean content
+│   │       ├── item_1_business_model.html
+│   │       └── ...
 ├── templates/
 │   ├── versions/
 │   │   ├── version1.html            # SEC format
@@ -162,7 +164,7 @@ FRUX/
 
 ## Next Steps
 
-1. Create `data/fragments/` directory
+1. Create `templates/data/fragments/` directory
 2. Start migrating fragments one by one
 3. Update registry as you go
 4. Test each fragment in Version 1
