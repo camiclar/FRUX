@@ -152,6 +152,132 @@
       "order": 17,
       "page_numbers": [8, 9],
       "page_breaks": []
+    },
+    {
+      "id": "item_1a_risk_factors",
+      "file": "item_1a_risk_factors.html",
+      "title": "Item 1A - Risk Factors",
+      "item": "1A",
+      "order": 18,
+      "page_numbers": [9],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1a_economic_risks",
+      "file": "item_1a_economic_risks.html",
+      "title": "Item 1A - Economic Risks",
+      "item": "1A",
+      "order": 19,
+      "page_numbers": [9, 10],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1a_business_operational_risks",
+      "file": "item_1a_business_operational_risks.html",
+      "title": "Item 1A - Business and Operational Risks",
+      "item": "1A",
+      "order": 20,
+      "page_numbers": [10, 11, 12],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1a_strategic_transaction_risks",
+      "file": "item_1a_strategic_transaction_risks.html",
+      "title": "Item 1A - Strategic Transaction Risks",
+      "item": "1A",
+      "order": 21,
+      "page_numbers": [12],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1a_tax_legal_regulatory_risks",
+      "file": "item_1a_tax_legal_regulatory_risks.html",
+      "title": "Item 1A - Tax, Legal and Regulatory Risks",
+      "item": "1A",
+      "order": 22,
+      "page_numbers": [12, 13],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1a_forward-looking_statements",
+      "file": "item_1a_forward-looking_statements.html",
+      "title": "Item 1A - Forward-Looking Statements",
+      "item": "1A",
+      "order": 23,
+      "page_numbers": [13, 14],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1b",
+      "file": "item_1b.html",
+      "title": "Item 1B - Unresolved Staff Comments",
+      "item": "1B",
+      "order": 24,
+      "page_numbers": [14],
+      "page_breaks": []
+    },
+    {
+      "id": "item_1c",
+      "file": "item_1c.html",
+      "title": "Item 1C - Cybersecurity",
+      "item": "1C",
+      "order": 25,
+      "page_numbers": [14, 15, 16],
+      "page_breaks": []
+    },
+    {
+      "id": "item_2",
+      "file": "item_2.html",
+      "title": "Item 2 - Properties",
+      "item": "2",
+      "order": 26,
+      "page_numbers": [16],
+      "page_breaks": []
+    },
+    {
+      "id": "item_3",
+      "file": "item_3.html",
+      "title": "Item 3 - Legal Proceedings",
+      "item": "3",
+      "order": 27,
+      "page_numbers": [16, 17],
+      "page_breaks": []
+    },
+    {
+      "id": "item_4",
+      "file": "item_4.html",
+      "title": "Item 4 - Mine Safety Disclosures",
+      "item": "4",
+      "order": 28,
+      "page_numbers": [17, 16],
+      "page_breaks": []
+    },
+    {
+      "id": "item_5_common_stock_data",
+      "file": "item_5_common_stock_data.html",
+      "title": "Item 5 - Common Stock Data",
+      "item": "5",
+      "order": 29,
+      "page_numbers": [16, 17],
+      "page_breaks": []
+    },
+    {
+      "id": "item_5_repurchases_common_stock",
+      "file": "item_5_repurchases_common_stock.html",
+      "title": "Item 5 - Repurchases of Common Stock",
+      "item": "5",
+      "order": 30,
+      "page_numbers": [17, 18],
+      "page_breaks": []
+    },
+    {
+      "id": "item_6",
+      "file": "item_6.html",
+      "title": "Item 6 - [Reserved]",
+      "item": "6",
+      "order": 31,
+      "page_numbers": [18],
+      "page_breaks": []
     }
   ]
 }
