@@ -278,6 +278,60 @@
       "order": 31,
       "page_numbers": [18],
       "page_breaks": []
+    },
+    {
+      "id": "item_7_introduction",
+      "file": "item_7_introduction.html",
+      "title": "Item 7 - Introduction",
+      "item": "7",
+      "order": 32,
+      "page_numbers": [18],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_business_model",
+      "file": "item_7_business_model.html",
+      "title": "Item 7 - The ITW Business Model",
+      "item": "7",
+      "order": 33,
+      "page_numbers": [18],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_enterprise_strategy",
+      "file": "item_7_enterprise_strategy.html",
+      "title": "Item 7 - Enterprise Strategy: 2012 - 2023",
+      "item": "7",
+      "order": 34,
+      "page_numbers": [18, 19],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_next_phase",
+      "file": "item_7_next_phase.html",
+      "title": "Item 7 - Our Next Phase: 2024 - 2030",
+      "item": "7",
+      "order": 35,
+      "page_numbers": [19, 20],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_terms_used",
+      "file": "item_7_terms_used.html",
+      "title": "Item 7 - Terms Used by ITW",
+      "item": "7",
+      "order": 36,
+      "page_numbers": [20, 21],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_consolidated_results",
+      "file": "item_7_consolidated_results.html",
+      "title": "Item 7 - Consolidated Results of Operations",
+      "item": "7",
+      "order": 37,
+      "page_numbers": [21, 22],
+      "page_breaks": []
     }
   ]
 }

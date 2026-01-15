@@ -247,6 +247,10 @@ body {
   padding: 2px 0;
 }
 
+.table-cell-padding-indent {
+  padding: 2px 1pt 2px 5.5pt;
+}
+
 .table-header {
   font-weight: 700;
 }
