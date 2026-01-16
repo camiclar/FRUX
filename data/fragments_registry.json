@@ -332,6 +332,177 @@
       "order": 37,
       "page_numbers": [21, 22],
       "page_breaks": []
+    },
+    {
+      "id": "item_7_results_total_company",
+      "file": "item_7_results_total_company.html",
+      "title": "Item 7 - Results of Operations for Total Company",
+      "item": "7",
+      "order": 38,
+      "page_numbers": [22, 23, 24],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_results_by_segment",
+      "file": "item_7_results_by_segment.html",
+      "title": "Item 7 - Results of Operations by Segment",
+      "item": "7",
+      "order": 39,
+      "page_numbers": [24, 25],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_results_automotive",
+      "file": "item_7_results_automotive.html",
+      "title": "Item 7 - Results of Operations - Automotive OEM",
+      "item": "7",
+      "order": 40,
+      "page_numbers": [25, 26],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_results_food_equipment",
+      "file": "item_7_results_food_equipment.html",
+      "title": "Item 7 - Results of Operations - Food Equipment",
+      "item": "7",
+      "order": 41,
+      "page_numbers": [26, 27],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_results_test_measurement",
+      "file": "item_7_results_test_measurement.html",
+      "title": "Item 7 - Results of Operations - Test & Measurement and Electronics",
+      "item": "7",
+      "order": 42,
+      "page_numbers": [27, 28],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_results_welding",
+      "file": "item_7_results_welding.html",
+      "title": "Item 7 - Results of Operations - Welding",
+      "item": "7",
+      "order": 43,
+      "page_numbers": [28, 29],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_results_polymers_fluids",
+      "file": "item_7_results_polymers_fluids.html",
+      "title": "Item 7 - Results of Operations - Polymers & Fluids",
+      "item": "7",
+      "order": 44,
+      "page_numbers": [29, 30, 31],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_results_construction_products",
+      "file": "item_7_results_construction_products.html",
+      "title": "Item 7 - Results of Operations - Construction Products",
+      "item": "7",
+      "order": 45,
+      "page_numbers": [31, 32],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_results_speciality_products",
+      "file": "item_7_results_speciality_products.html",
+      "title": "Item 7 - Results of Operations - Specialty Products",
+      "item": "7",
+      "order": 46,
+      "page_numbers": [32, 33],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_other_financial_highlights",
+      "file": "item_7_other_financial_highlights.html",
+      "title": "Item 7 - Other Financial Highlights",
+      "item": "7",
+      "order": 47,
+      "page_numbers": [33, 34],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_new_accounting_pronouncements",
+      "file": "item_7_new_accounting_pronouncements.html",
+      "title": "Item 7 - New Accounting Pronouncements",
+      "item": "7",
+      "order": 48,
+      "page_numbers": [34],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_liquidity_capital_resources",
+      "file": "item_7_liquidity_capital_resources.html",
+      "title": "Item 7 - Liquidity and Capital Resources",
+      "item": "7",
+      "order": 49,
+      "page_numbers": [34, 35],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_lcr_cash_flow",
+      "file": "item_7_lcr_cash_flow.html",
+      "title": "Item 7 - Cash Flow",
+      "item": "7",
+      "order": 50,
+      "page_numbers": [35, 36],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_lcr_stock_repurchase_programs",
+      "file": "item_7_lcr_stock_repurchase_programs.html",
+      "title": "Item 7 - Stock Repurchase Programs",
+      "item": "7",
+      "order": 51,
+      "page_numbers": [35, 36],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_lcr_debt",
+      "file": "item_7_lcr_debt.html",
+      "title": "Item 7 - Debt",
+      "item": "7",
+      "order": 53,
+      "page_numbers": [37, 38, 39],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_lcr_stockholders_equity",
+      "file": "item_7_lcr_stockholders_equity.html",
+      "title": "Item 7 - Stockholders' Equity",
+      "item": "7",
+      "order": 54,
+      "page_numbers": [37, 38],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_lcr_working_capital",
+      "file": "item_7_lcr_working_capital.html",
+      "title": "Item 7 - Working Capital",
+      "item": "7",
+      "order": 52,
+      "page_numbers": [36, 37],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_lcr_after_tax_return",
+      "file": "item_7_lcr_after_tax_return.html",
+      "title": "Item 7 - After-tax Return on Average Invested Capital",
+      "item": "7",
+      "order": 55,
+      "page_numbers": [37, 38],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_lcr_total_debt_ebitda",
+      "file": "item_7_lcr_total_debt_ebitda.html",
+      "title": "Item 7 - Total Debt to EBITDA",
+      "item": "7",
+      "order": 56,
+      "page_numbers": [39, 40],
+      "page_breaks": []
     }
   ]
 }
