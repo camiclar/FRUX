@@ -539,6 +539,42 @@
       "order": 60,
       "page_numbers": [41, 42],
       "page_breaks": []
+    },
+    {
+      "id": "item_7a",
+      "file": "item_7a.html",
+      "title": "Item 7A - Quantitative and Qualitative Disclosures About Market Risk",
+      "item": "7A",
+      "order": 61,
+      "page_numbers": [42, 43],
+      "page_breaks": []
+    },
+    {
+      "id": "item_8_management_report",
+      "file": "item_8_management_report.html",
+      "title": "Item 8 - Management Report on Internal Control Over Financial Reporting",
+      "item": "8",
+      "order": 62,
+      "page_numbers": [44],
+      "page_breaks": []
+    },
+    {
+      "id": "item_8_report_accounting_firm",
+      "file": "item_8_report_accounting_firm.html",
+      "title": "Item 8 - Report of Independent Registered Public Accounting Firm",
+      "item": "8",
+      "order": 63,
+      "page_numbers": [44, 45, 46],
+      "page_breaks": []
+    },
+    {
+      "id": "item_8_statement_of_income",
+      "file": "item_8_statement_of_income.html",
+      "title": "Item 8 - Statement of Income",
+      "item": "8",
+      "order": 64,
+      "page_numbers": [47],
+      "page_breaks": []
     }
   ]
 }

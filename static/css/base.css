@@ -110,12 +110,37 @@ body {
   margin-bottom: 18.6667px;
 }
 
+.section-heading-no-bottom-margin {
+  color: #000000;
+  font-family: 'Times New Roman', sans-serif;
+  font-size: 10pt;
+  font-weight: 700;
+  line-height: 120%;
+  margin: 0;
+  padding: 0;
+  margin-top: 18.6667px;
+  margin-bottom: 0;
+}
+
 .section-heading-italic {
   color: #000000;
   font-family: 'Times New Roman', sans-serif;
   font-size: 10pt;
   font-style: italic;
   font-weight: 700;
+  line-height: 120%;
+  margin: 0;
+  padding: 0;
+  margin-top: 18.6667px;
+  margin-bottom: 18.6667px;
+}
+
+.section-heading-italic-only {
+  color: #000000;
+  font-family: 'Times New Roman', sans-serif;
+  font-size: 10pt;
+  font-style: italic;
+  font-weight: 400;
   line-height: 120%;
   margin: 0;
   padding: 0;
@@ -144,10 +169,33 @@ body {
   font-size: 10pt;
 }
 
+.list-bulleted {
+  list-style-type: disc;
+  padding-left: 36pt;
+  margin: 0;
+  margin-bottom: 18.6667px;
+  margin-top: 18.6667px;
+  font-size: 10pt;
+}
+
+.list-bulleted .list-bulleted {
+  list-style-type: circle;
+  padding-left: 36pt;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 .list-item {
   padding-left: 36pt;
   text-indent: -18pt;
   margin: 0;
+}
+
+.list-item-bulleted {
+  padding-left: 0;
+  text-indent: 0;
+  margin: 0;
+  list-style-position: outside;
 }
 
 .list-item-indent-2 {
@@ -318,6 +366,32 @@ body {
   line-height: 100%;
 }
 
+.text-center {
+  text-align: center;
+}
+
+.body-text-bold {
+  color: #000000;
+  font-family: 'Times New Roman', sans-serif;
+  font-size: 10pt;
+  font-weight: 700;
+  line-height: 120%;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 18.6667px;
+}
+
+.table-note {
+  text-align: center;
+  font-size: 9pt;
+  margin: 0;
+  margin-bottom: 18.6667px;
+  color: #000000;
+  font-family: 'Times New Roman', sans-serif;
+  font-weight: 400;
+  line-height: 120%;
+}
+
 .table-row-alt {
   background-color: #ffffff;
 }
@@ -365,3 +439,19 @@ body {
   display: inline;
 }
 
+/* Signature blocks (e.g., management report sign-offs) */
+.signature-blocks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 36pt;
+  margin: 18.6667px 0;
+}
+
+.signature-block {
+  flex: 1 1 240px;
+}
+
+.signature-line {
+  margin-bottom: 0;
+}
