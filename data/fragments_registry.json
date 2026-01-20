@@ -460,20 +460,11 @@
       "page_breaks": []
     },
     {
-      "id": "item_7_lcr_debt",
-      "file": "item_7_lcr_debt.html",
-      "title": "Item 7 - Debt",
+      "id": "item_7_lcr_after_tax_return",
+      "file": "item_7_lcr_after_tax_return.html",
+      "title": "Item 7 - After-tax Return on Average Invested Capital",
       "item": "7",
-      "order": 53,
-      "page_numbers": [37, 38, 39],
-      "page_breaks": []
-    },
-    {
-      "id": "item_7_lcr_stockholders_equity",
-      "file": "item_7_lcr_stockholders_equity.html",
-      "title": "Item 7 - Stockholders' Equity",
-      "item": "7",
-      "order": 54,
+      "order": 52,
       "page_numbers": [37, 38],
       "page_breaks": []
     },
@@ -482,17 +473,17 @@
       "file": "item_7_lcr_working_capital.html",
       "title": "Item 7 - Working Capital",
       "item": "7",
-      "order": 52,
+      "order": 53,
       "page_numbers": [36, 37],
       "page_breaks": []
     },
     {
-      "id": "item_7_lcr_after_tax_return",
-      "file": "item_7_lcr_after_tax_return.html",
-      "title": "Item 7 - After-tax Return on Average Invested Capital",
+      "id": "item_7_lcr_debt",
+      "file": "item_7_lcr_debt.html",
+      "title": "Item 7 - Debt",
       "item": "7",
-      "order": 55,
-      "page_numbers": [37, 38],
+      "order": 54,
+      "page_numbers": [37, 38, 39],
       "page_breaks": []
     },
     {
@@ -500,8 +491,53 @@
       "file": "item_7_lcr_total_debt_ebitda.html",
       "title": "Item 7 - Total Debt to EBITDA",
       "item": "7",
-      "order": 56,
+      "order": 55,
       "page_numbers": [39, 40],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_lcr_stockholders_equity",
+      "file": "item_7_lcr_stockholders_equity.html",
+      "title": "Item 7 - Stockholders' Equity",
+      "item": "7",
+      "order": 56,
+      "page_numbers": [37, 38],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_critical_accounting_estimates",
+      "file": "item_7_critical_accounting_estimates.html",
+      "title": "Item 7 - Critical Accounting Estimates",
+      "item": "7",
+      "order": 57,
+      "page_numbers": [40, 41],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_cae_income_taxes",
+      "file": "item_7_cae_income_taxes.html",
+      "title": "Item 7 - Income Taxes",
+      "item": "7",
+      "order": 58,
+      "page_numbers": [40, 41],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_cae_goodwill_intangible_assets",
+      "file": "item_7_cae_goodwill_intangible_assets.html",
+      "title": "Item 7 - Goodwill and Intangible Assets",
+      "item": "7",
+      "order": 59,
+      "page_numbers": [40, 41],
+      "page_breaks": []
+    },
+    {
+      "id": "item_7_cae_pension",
+      "file": "item_7_cae_pension.html",
+      "title": "Item 7 - Pension and Other Postretirement Benefits",
+      "item": "7",
+      "order": 60,
+      "page_numbers": [41, 42],
       "page_breaks": []
     }
   ]
