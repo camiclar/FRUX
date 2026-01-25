@@ -611,6 +611,15 @@
       "order": 68,
       "page_numbers": [51],
       "page_breaks": []
+    },
+    {
+      "id": "item_8_notes_to_financial_statements",
+      "file": "item_8_notes_to_financial_statements.html",
+      "title": "Item 8 - Notes to Financial Statements",
+      "item": "8",
+      "order": 69,
+      "page_numbers": [52, 53, 54],
+      "page_breaks": []
     }
   ]
 }
