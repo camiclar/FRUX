@@ -331,7 +331,11 @@ body {
 }
 
 .table-cell-padding-indent {
-  padding: 2px 1pt 2px 5.5pt;
+  padding: 2px 1pt 2px 20px;
+}
+
+.table-cell-padding-indent-double {
+  padding: 2px 1pt 2px 40px;
 }
 
 .table-cell-padding-indent-10 {
@@ -467,4 +471,42 @@ body {
 
 .signature-line {
   margin-bottom: 0;
+}
+
+/* Statement of Changes in Stockholders' Equity table - smaller font */
+.table-statement-changes-equity {
+  font-size: 8pt;
+}
+
+.table-statement-changes-equity .table-text,
+.table-statement-changes-equity .table-text-header,
+.table-statement-changes-equity .table-header,
+.table-statement-changes-equity th,
+.table-statement-changes-equity td {
+  font-size: 8pt;
+}
+
+/* Allow text wrapping in first column */
+.table-statement-changes-equity th:first-child,
+.table-statement-changes-equity td:first-child {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+/* Statement of Cash Flows table - specific font sizes */
+.table-statement-cash-flows .table-text-header {
+  font-size: 8pt;
+}
+
+.table-statement-cash-flows .table-header {
+  font-size: 8pt;
+}
+
+.table-statement-cash-flows .table-text {
+  font-size: 9pt;
+}
+
+.table-statement-cash-flows th,
+.table-statement-cash-flows td {
+  font-size: 9pt;
 }

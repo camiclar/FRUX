@@ -575,6 +575,42 @@
       "order": 64,
       "page_numbers": [47],
       "page_breaks": []
+    },
+    {
+      "id": "item_8_statement_of_comprehensive_income",
+      "file": "item_8_statement_of_comprehensive_income.html",
+      "title": "Item 8 - Statement of Comprehensive Income",
+      "item": "8",
+      "order": 65,
+      "page_numbers": [48],
+      "page_breaks": []
+    },
+    {
+      "id": "item_8_statement_of_financial_position",
+      "file": "item_8_statement_of_financial_position.html",
+      "title": "Item 8 - Statement of Financial Position",
+      "item": "8",
+      "order": 66,
+      "page_numbers": [49],
+      "page_breaks": []
+    },
+    {
+      "id": "item_8_statement_of_changes_stockholders_equity",
+      "file": "item_8_statement_of_changes_stockholders_equity.html",
+      "title": "Item 8 - Statement of Changes in Stockholders' Equity",
+      "item": "8",
+      "order": 67,
+      "page_numbers": [50],
+      "page_breaks": []
+    },
+    {
+      "id": "item_8_statement_of_cash_flows",
+      "file": "item_8_statement_of_cash_flows.html",
+      "title": "Item 8 - Statement of Cash Flows",
+      "item": "8",
+      "order": 68,
+      "page_numbers": [51],
+      "page_breaks": []
     }
   ]
 }
