@@ -620,6 +620,51 @@
       "order": 69,
       "page_numbers": [52, 53, 54],
       "page_breaks": []
+    },
+    {
+      "id": "item_8_ntfs_acquisitions",
+      "file": "item_8_ntfs_acquisitions.html",
+      "title": "Item 8 - Notes to Financial Statements - Acquisitions",
+      "item": "8",
+      "order": 70,
+      "page_numbers": [54],
+      "page_breaks": []
+    },
+    {
+      "id": "item_8_ntfs_divestitures",
+      "file": "item_8_ntfs_divestitures.html",
+      "title": "Item 8 - Notes to Financial Statements - Divestitures",
+      "item": "8",
+      "order": 71,
+      "page_numbers": [54, 55],
+      "page_breaks": []
+    },
+    {
+      "id": "item_8_ntfs_operating_revenue",
+      "file": "item_8_ntfs_operating_revenue.html",
+      "title": "Item 8 - Notes to Financial Statements - Operating Revenue",
+      "item": "8",
+      "order": 72,
+      "page_numbers": [55, 56, 57],
+      "page_breaks": []
+    },
+    {
+      "id": "item_8_ntfs_other_income_expense",
+      "file": "item_8_ntfs_other_income_expense.html",
+      "title": "Item 8 - Notes to Financial Statements - Other Income (Expense)",
+      "item": "8",
+      "order": 73,
+      "page_numbers": [57, 58],
+      "page_breaks": []
+    },
+    {
+      "id": "item_8_ntfs_income_taxes",
+      "file": "item_8_ntfs_income_taxes.html",
+      "title": "Item 8 - Notes to Financial Statements - Income Taxes",
+      "item": "8",
+      "order": 74,
+      "page_numbers": [58, 59, 60, 61],
+      "page_breaks": []
     }
   ]
 }
