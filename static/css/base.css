@@ -510,3 +510,17 @@ body {
 .table-statement-cash-flows td {
   font-size: 9pt;
 }
+
+/* Goodwill changes table (first table in NTFS Goodwill and Intangible Assets) - SEC font sizes */
+.table-goodwill-changes thead td .table-text-header {
+  font-size: 7pt;
+}
+.table-goodwill-changes thead td:first-child,
+.table-goodwill-changes thead td:first-child .table-text-header {
+  font-size: 8pt;
+}
+.table-goodwill-changes tbody td,
+.table-goodwill-changes tbody .table-text,
+.table-goodwill-changes tbody .table-text-header {
+  font-size: 9pt;
+}

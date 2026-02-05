@@ -665,6 +665,24 @@
       "order": 74,
       "page_numbers": [58, 59, 60, 61],
       "page_breaks": []
+    },
+    {
+      "id": "item_8_ntfs_net_income_per_share",
+      "file": "item_8_ntfs_net_income_per_share.html",
+      "title": "Item 8 - Notes to Financial Statements - Net Income Per Share",
+      "item": "8",
+      "order": 75,
+      "page_numbers": [62],
+      "page_breaks": []
+    },
+    {
+      "id": "item_8_ntfs_goodwill_intangible_assets",
+      "file": "item_8_ntfs_goodwill_intangible_assets.html",
+      "title": "Item 8 - Notes to Financial Statements - Goodwill and Intangible Assets",
+      "item": "8",
+      "order": 76,
+      "page_numbers": [62, 63],
+      "page_breaks": []
     }
   ]
 }
