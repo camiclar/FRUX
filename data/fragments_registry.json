@@ -683,6 +683,33 @@
       "order": 76,
       "page_numbers": [62, 63],
       "page_breaks": []
+    },
+    {
+      "id": "item_8_ntfs_leases",
+      "file": "item_8_ntfs_leases.html",
+      "title": "Item 8 - Notes to Financial Statements - Leases",
+      "item": "8",
+      "order": 77,
+      "page_numbers": [64],
+      "page_breaks": []
+    },
+    {
+      "id": "item_8_ntfs_debt",
+      "file": "item_8_ntfs_debt.html",
+      "title": "Item 8 - Notes to Financial Statements - Debt",
+      "item": "8",
+      "order": 78,
+      "page_numbers": [64, 65, 66],
+      "page_breaks": []
+    },
+    {
+      "id": "item_8_ntfs_pension_postretirement_benefits",
+      "file": "item_8_ntfs_pension_postretirement_benefits.html",
+      "title": "Item 8 - Notes to Financial Statements - Pension and Other Postretirement Benefits",
+      "item": "8",
+      "order": 79,
+      "page_numbers": [67, 68, 69, 70, 71],
+      "page_breaks": []
     }
   ]
 }

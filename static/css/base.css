@@ -159,6 +159,11 @@ body {
   line-height: 1;
 }
 
+/* Extra top margin for a paragraph or block that follows another block (e.g. after a table) */
+.spacing-top {
+  margin-top: 18.6667px;
+}
+
 /* Lists */
 .list {
   list-style: none;
@@ -275,6 +280,11 @@ body {
   margin-bottom: 5pt;
   vertical-align: text-bottom;
   width: 100%;
+}
+
+/* Lease maturities table - fixed width to match SEC (504pt) */
+.table-lease-maturities {
+  width: 504pt;
 }
 
 .table-cell {
