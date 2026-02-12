@@ -23,6 +23,10 @@ body {
   margin-bottom: 0 !important;
 }
 
+.vertical-padding {
+  padding-top: 18.6667px !important;
+}
+
 .heading-1 {
   color: #000000;
   font-family: 'Times New Roman', sans-serif;

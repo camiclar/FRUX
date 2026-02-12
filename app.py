@@ -31,17 +31,11 @@ def view_version(version):
     fragments = load_fragments()
     
     if version == 1:
-        # Use test template if fragments exist, otherwise use original
-        if fragments:
-            return render_template('version1_test.html', fragments=fragments)
-        else:
-            return render_template('version1.html')
+        return render_template('version1.html', fragments=fragments)
     elif version == 2:
-        # Version 2 test - no page numbers
         if fragments:
-            return render_template('version2_test.html', fragments=fragments)
-        else:
-            return f"Version {version} requires fragments. Please set up fragments first.", 404
+            return render_template('version2.html', fragments=fragments)
+        return f"Version {version} requires fragments. Please set up fragments first.", 404
     else:
         return f"Version {version} coming soon!", 404
 

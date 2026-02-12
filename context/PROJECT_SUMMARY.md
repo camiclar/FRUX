@@ -6,9 +6,9 @@
 
 ## Overarching Goal
 
-The primary goal of this project is to create **10 different versions** of the same 10-K document, each with progressively enhanced user experience features. Version 1 serves as a baseline that replicates the exact appearance of the document as it appears on the SEC website, while future versions will add features like floating navigation, pagination, and other UX improvements.
+The primary goal of this project is to create **10 different versions** of the same 10-K document, each with one UX improvement. Version 1 is the baseline that replicates the exact appearance of the document as it appears on the SEC website. Version 2, 3, and so on use the **same HTML fragments** as version 1 but each add a single UX enhancement—e.g. side navigation, pagination, search—so we can compare and combine improvements.
 
-The core philosophy is **content reusability**: all versions share the same content fragments, but present them with different layouts, styling, and interactive features.
+The core philosophy is **content reusability**: all versions share the same content fragments and differ only in presentation (layout, styling, and interactive features).
 
 ## Technical Requirements
 
@@ -21,44 +21,21 @@ The core philosophy is **content reusability**: all versions share the same cont
 ### Architecture
 
 1. **Modular Content Structure**
-   - The original 28,838-line HTML document has been split into manageable fragments
-   - All content fragments are stored in `templates/fragments/`
-   - Each fragment represents a logical section of the document:
-     - `head.html` - HTML head section with metadata
-     - `title_page.html` - Title page (company info, SEC form header, etc.)
-     - `contents.html` - Table of contents
-     - `item_1.html` through `item_16.html` - Individual SEC 10-K items (each item gets its own fragment)
-       - Item 1: Business
-       - Item 2: Properties
-       - Item 3: Legal Proceedings
-       - Item 4: Mine Safety Disclosures
-       - Item 5: Market for Registrant's Common Equity
-       - Item 6: Reserved
-       - Item 7: Management's Discussion and Analysis
-       - Item 8: Financial Statements and Supplementary Data
-       - Item 9: Changes in and Disagreements With Accountants
-       - Items 10-14: Part III items (typically incorporated by reference)
-       - Item 15: Exhibit and Financial Statement Schedules
-       - Item 16: Form 10-K Summary
-     - `closing.html` - Closing HTML tags
-   - **Note**: The old `part1.html`, `part2.html`, `part3.html`, `part4.html`, and `header.html` files are preserved for reference but are no longer used in the current version structure
+   - All content fragments, including **title page and table of contents**, live in `templates/data/fragments/` (e.g. `title_page.html`, `table_of_contents.html`, `item_1_general.html`, `item_8_ntfs_leases.html`, `part_iv.html`). Order and metadata are defined in `data/fragments_registry.json`. The fragment macro includes from `data/fragments/` for every fragment. The `templates/fragments/` folder has been removed.
 
 2. **Version System**
-   - Each version is a separate template file (e.g., `version1.html`, `version2.html`)
-   - All versions include the same content fragments
-   - Versions differ only in presentation (CSS, JavaScript, layout)
-   - The Flask app routes `/version/<number>` to the appropriate template
+   - Each version is a separate template in `templates/` (e.g., `version1.html`, `version2.html`). All versions use the same HTML fragments from `templates/data/fragments/` and the registry; they differ only in presentation (CSS, JavaScript, layout).
+   - **Version 1**: Baseline—SEC-like appearance (page numbers, etc.).
+   - **Version 2+**: Same fragments, each version adds one UX improvement (e.g. side navigation, pagination). The Flask app routes `/version/<number>` to the appropriate template.
 
 3. **Flask Application** (`app.py`)
    - Main route (`/`) serves the menu page for version selection
-   - Version routes (`/version/<int:version>`) serve specific versions
-   - Currently only Version 1 is implemented; versions 2-10 are planned
+   - Version routes (`/version/<int:version>`) serve the corresponding template with fragments from the registry. Version 1 has a fallback (title + ToC only) when the registry is empty; version 2+ require the registry.
 
 4. **Styling**
    - Shared, semantic styles (e.g., `section-heading`, `body-text`, `table-*` classes, page-number helpers, spacing utilities) live in `static/css/base.css`
    - Version-specific styles live in `static/css/version1.css`, `static/css/version2.css`, etc.
-   - A legacy `static/styles.css` still exists, but new layout and fragment work should target the `static/css/` files
-   - Inline `style-*` classes from the original SEC HTML are being systematically replaced by semantic classes defined in `base.css`
+   - New layout and fragment work should target the `static/css/` files
 
 ### Key Design Decisions
 
@@ -73,14 +50,13 @@ The core philosophy is **content reusability**: all versions share the same cont
 
 3. **File Organization**
    - Root-level exhibit files (e.g., `exhibit-10m-benefit-plan.html`) are standalone exhibit documents
-   - Main document content is in `templates/fragments/`
+   - Main document content is in `templates/data/fragments/`
    - Static assets (CSS, images) are in `static/`
 
 4. **Three-Layer Fragment / Registry Architecture**
    - **Content layer**: semantic, version-agnostic fragments in `templates/data/fragments/` (no page numbers, no inline `style-*`)
    - **Metadata layer**: `data/fragments_registry.json` stores fragment IDs, titles, item relationships, order, page numbers and page breaks
-   - **Presentation layer**: version templates in `templates/versions/` plus CSS in `static/css/` render fragments with or without page numbers depending on the version
-   - See `ARCHITECTURE_SUMMARY.md` for detailed examples and the longer-term fragment plan
+   - **Presentation layer**: version templates (`templates/version1.html`, `version2.html`, etc.) and CSS in `static/css/` render fragments; the fragment macro in `templates/macros/fragment_macros.html` injects page numbers or not depending on the version
 
 ## ORIGINAL_SITE Folder
 
@@ -112,24 +88,19 @@ The `ORIGINAL_SITE` folder contains the **original, unmodified files** downloade
 ## Current Project Status
 
 ### Completed
-- ✅ Version 1: Original SEC format (exact replica)
-- ✅ Content fragmentation and organization (legacy `templates/fragments/` per-item files)
-- ✅ Flask application structure
-- ✅ Menu system for version selection
-- ✅ Initial CSS extraction and organization
-- ✅ Core three-layer fragment architecture implemented (`templates/data/fragments/`, `data/fragments_registry.json`, `static/css/*`)
-- ✅ Several Item 8 note fragments migrated to semantic HTML and registered in the fragment registry:
-  - `item_8_ntfs_leases`
-  - `item_8_ntfs_debt`
-  - `item_8_ntfs_goodwill_intangible_assets`
-  - `item_8_ntfs_pension_postretirement_benefits`
+- ✅ **Fragment cleanup complete**: All content, including title page and table of contents, lives in `templates/data/fragments/`; `data/fragments_registry.json` defines order and metadata. The legacy `templates/fragments/` folder has been removed.
+- ✅ Version 1: Baseline (original SEC format, exact replica)
+- ✅ Version 2: Same fragments as version 1, no page numbers (template and route in place; further UX enhancements can be added here or in version 3+)
+- ✅ Flask application structure and menu for version selection
+- ✅ Three-layer fragment architecture: `templates/data/fragments/`, `data/fragments_registry.json`, version templates + `static/css/`
+- ✅ Consolidated version templates: single `version1.html` and `version2.html` (no separate _test templates)
 
-### In Progress / Planned
-- 🚧 Version 2: Floating navigation
-- 🚧 Version 3: Pagination
-- 🚧 Versions 4-9: Additional UX enhancements (TBD)
-- 🚧 Version 10: All enhancements combined
-- 🚧 Continue migrating remaining Item 8 note fragments (e.g., commitments & contingencies, stockholders' equity) into `templates/data/fragments/` and `data/fragments_registry.json`
+### Next Phase
+- **Version 2, 3, … each with one UX improvement**: Use the same HTML fragments as version 1; each new version adds a single UX enhancement for easy comparison and future combination. Examples:
+  - **Version 2**: Side navigation (sticky or floating TOC / section nav)
+  - **Version 3**: Pagination (page-by-page or section-by-section)
+  - **Version 4+**: Search, print-optimized layout, mobile tweaks, etc.
+- **Version 10** (or final): Combine all chosen enhancements into one version.
 
 ## File Structure
 
@@ -139,10 +110,7 @@ FRUX/
 ├── requirements.txt                # Python dependencies
 ├── README.md                       # Project documentation
 ├── SETUP.md                        # Setup instructions
-├── SETUP_COMPLETE.md               # Notes on completed setup / refactors
 ├── Procfile                        # Deployment configuration
-├── index.html                      # Original full document (backup)
-├── exhibit-*.html                  # Standalone exhibit documents
 ├── context/                        # Context and reference materials
 │   ├── ORIGINAL_SITE/             # Original SEC files (reference)
 │   └── PROJECT_SUMMARY.md         # This file
@@ -152,59 +120,39 @@ FRUX/
 │   └── css/                       # Shared and version-specific CSS
 │       ├── base.css               # Shared semantic styles (tables, text, spacing)
 │       ├── version1.css           # Version 1 (SEC-like) presentation
-│       └── version2.css           # Version 2 (enhanced UX) presentation
+│       └── version2.css           # Version 2 presentation
 └── templates/
     ├── menu.html                  # Main menu page
-    ├── versions/
-    │   ├── version1.html          # Version 1 template
-    │   └── version2.html          # Version 2 template
-    ├── fragments/                 # Legacy whole-item fragments (still available)
-    │   ├── head.html
-    │   ├── title_page.html
-    │   ├── contents.html
-    │   ├── item_1.html
-    │   ├── item_2.html
-    │   ├── item_3.html
-    │   ├── item_4.html
-    │   ├── item_5.html
-    │   ├── item_6.html
-    │   ├── item_7.html
-    │   ├── item_8.html
-    │   ├── item_9.html
-    │   ├── item_10.html
-    │   ├── item_11.html
-    │   ├── item_12.html
-    │   ├── item_13.html
-    │   ├── item_14.html
-    │   ├── item_15.html
-    │   ├── item_16.html
-    │   └── closing.html
+    ├── version1.html              # Version 1 (baseline); uses fragments when registry has data
+    ├── version2.html              # Version 2 (same fragments, no page numbers; add UX enhancements here or in v3+)
+    ├── macros/
+    │   └── fragment_macros.html   # Renders a fragment (includes from data/fragments/)
     └── data/
-        └── fragments/             # Normalized content fragments (in progress)
+        └── fragments/            # All content fragments (title page, ToC, items, part IV, etc.)
+            ├── title_page.html
+            ├── table_of_contents.html
             ├── item_1_general.html
             ├── item_1_business_model.html
-            ├── item_8_ntfs_leases.html
-            ├── item_8_ntfs_debt.html
-            ├── item_8_ntfs_goodwill_intangible_assets.html
-            ├── item_8_ntfs_pension_postretirement_benefits.html
-            └── ...
+            ├── item_8_ntfs_*.html
+            ├── part_iv.html
+            └── ...               # See fragments_registry.json for full list
 ```
 
 ## Development Workflow
 
-1. **To create a new version**:
-   - Copy an existing version template (e.g., `version1.html`)
-   - Add version-specific CSS/JavaScript
-   - Update `app.py` to handle the new version route
-   - Test that content displays correctly
+1. **To add a new version (e.g. version 3)**:
+   - Copy `version2.html` (or the latest version) to `version3.html`
+   - Add one UX improvement (e.g. side nav, pagination) via CSS/JS and any needed markup in the template
+   - Add a route in `app.py` for the new version (render `version3.html` with `fragments`)
+   - Add `static/css/version3.css` if needed. All versions use the same fragments from the registry.
 
 2. **To modify content**:
-   - Edit the appropriate fragment in `templates/fragments/`
-   - Changes will automatically apply to all versions that include that fragment
+   - Edit the appropriate file in `templates/data/fragments/`
+   - Changes apply to all versions automatically
 
-3. **To fix styling issues**:
-   - Edit `static/styles.css`
-   - For version-specific styles, add them to the version template or create version-specific CSS files
+3. **To fix styling**:
+   - Shared semantics: `static/css/base.css`
+   - Version-specific: `static/css/version1.css`, `version2.css`, etc. Legacy `static/styles.css` is still linked for compatibility
 
 ## Key Technical Challenges Addressed
 
@@ -231,22 +179,19 @@ python app.py
 When working on this project:
 
 1. **Always reference ORIGINAL_SITE** when you need to see how something originally appeared
-2. **Respect the fragment structure** - don't duplicate content across versions
-3. **Version 1 must remain unchanged** in terms of visual appearance (it's the baseline)
-4. **Check both `static/styles.css` and inline styles** when debugging layout issues
-5. **Each item (1-16) has its own fragment file** - this makes it much easier to locate and fix issues in specific sections
-6. **Table structures use colspan attributes** extensively for layout control
-7. **Items 10-14 are typically incorporated by reference** (they refer to the proxy statement) - their fragment files may be minimal or placeholders
-8. **The old `part1.html`, `part2.html`, `part3.html`, `part4.html`, and `header.html` files are preserved** but are no longer used in the current version structure - they can be referenced if needed but should not be modified
+2. **Respect the fragment structure**—all versions use the same HTML from `templates/data/fragments/` and the registry; don't duplicate content
+3. **Version 1 is the baseline**—keep its visual appearance (SEC-like) unchanged
+4. **Fragment rendering** is in `templates/macros/fragment_macros.html`; all fragments (including title page and table of contents) are included from `templates/data/fragments/` per registry
+5. **New versions = same fragments, one UX improvement each** (side nav, pagination, search, etc.) so we can compare and later combine
+6. **Table structures** use semantic classes from `base.css` and colspan where needed
+7. **Items 10-14** are often incorporated by reference; their fragments may be minimal placeholders
 
-## Future Enhancements (Planned)
+## Future Enhancements (Next Phase)
 
-- Floating navigation sidebar
-- Page-by-page pagination
-- Search functionality
-- Print-optimized layouts
-- Mobile-responsive versions
-- Accessibility improvements
-- Interactive data visualizations
-- Export to PDF functionality
+Each of these can be implemented as a **single UX improvement** in its own version (same fragments as version 1):
+
+- **Side navigation** (sticky or floating TOC / section nav) — e.g. version 2 or 3
+- **Pagination** (page-by-page or section-by-section) — e.g. version 3 or 4
+- Search, print-optimized layout, mobile tweaks, accessibility improvements, etc.
+- **Final version**: combine the chosen enhancements into one version
 

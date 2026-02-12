@@ -5,8 +5,7 @@
     {# Version 1: Include page numbers and horizontal lines #}
     {# Special handling for title_page and table_of_contents - they have their own styling #}
     {% if fragment.id == 'title_page' or fragment.id == 'table_of_contents' %}
-      {# Include from fragments directory #}
-      {% include 'fragments/' + fragment.file %}
+      {% include 'data/fragments/' + fragment.file %}
     {% else %}
       <section class="fragment" 
                data-fragment-id="{{ fragment.id }}"
@@ -29,7 +28,7 @@
     {# Version 2: No page numbers, enhanced styling #}
     {# Special handling for title_page and table_of_contents - they have their own styling #}
     {% if fragment.id == 'title_page' or fragment.id == 'table_of_contents' %}
-      {% include 'fragments/' + fragment.file %}
+      {% include 'data/fragments/' + fragment.file %}
     {% else %}
       <section class="fragment" 
                data-fragment-id="{{ fragment.id }}"
