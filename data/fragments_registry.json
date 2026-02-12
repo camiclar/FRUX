@@ -728,6 +728,33 @@
       "order": 81,
       "page_numbers": [71, 72, 73],
       "page_breaks": []
+    },
+    {
+      "id": "item_8_ntfs_stock-based_compensation",
+      "file": "item_8_ntfs_stock-based_compensation.html",
+      "title": "Item 8 - Notes to Financial Statements - Stock-Based Compensation",
+      "item": "8",
+      "order": 82,
+      "page_numbers": [74, 75],
+      "page_breaks": []
+    },
+    {
+      "id": "item_8_ntfs_other_balance_sheet_information",
+      "file": "item_8_ntfs_other_balance_sheet_information.html",
+      "title": "Item 8 - Notes to Financial Statements - Other Balance Sheet Information",
+      "item": "8",
+      "order": 83,
+      "page_numbers": [76],
+      "page_breaks": []
+    },
+    {
+      "id": "item_8_ntfs_segment_information",
+      "file": "item_8_ntfs_segment_information.html",
+      "title": "Item 8 - Notes to Financial Statements - Segment Information",
+      "item": "8",
+      "order": 84,
+      "page_numbers": [77, 78, 79],
+      "page_breaks": []
     }
   ]
 }

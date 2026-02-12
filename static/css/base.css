@@ -311,6 +311,10 @@ body {
   vertical-align: bottom;
 }
 
+.table-cell-top {
+  vertical-align: top;
+}
+
 .table-cell-border-top {
   border-top: 0.5pt solid #000;
 }
@@ -318,6 +322,10 @@ body {
 .table-cell-border-bottom {
   border-bottom: 3pt double #000000;
   /* border-top: 0.5pt solid #000; */
+}
+
+.table-cell-border-top-double {
+  border-top: 3pt double #000000;
 }
 
 .table-cell-padding-left {
