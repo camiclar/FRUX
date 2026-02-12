@@ -710,6 +710,24 @@
       "order": 79,
       "page_numbers": [67, 68, 69, 70, 71],
       "page_breaks": []
+    },
+    {
+      "id": "item_8_ntfs_commitments_contingencies",
+      "file": "item_8_ntfs_commitments_contingencies.html",
+      "title": "Item 8 - Notes to Financial Statements - Commitments and Contingencies",
+      "item": "8",
+      "order": 80,
+      "page_numbers": [71],
+      "page_breaks": []
+    },
+    {
+      "id": "item_8_ntfs_stockholders_equity",
+      "file": "item_8_ntfs_stockholders_equity.html",
+      "title": "Item 8 - Notes to Financial Statements - Stockholders' Equity",
+      "item": "8",
+      "order": 81,
+      "page_numbers": [71, 72, 73],
+      "page_breaks": []
     }
   ]
 }

@@ -55,9 +55,10 @@ The core philosophy is **content reusability**: all versions share the same cont
    - Currently only Version 1 is implemented; versions 2-10 are planned
 
 4. **Styling**
-   - All CSS is centralized in `static/styles.css`
-   - Original inline styles were extracted and moved to the CSS file
-   - Styles maintain the original SEC document appearance for Version 1
+   - Shared, semantic styles (e.g., `section-heading`, `body-text`, `table-*` classes, page-number helpers, spacing utilities) live in `static/css/base.css`
+   - Version-specific styles live in `static/css/version1.css`, `static/css/version2.css`, etc.
+   - A legacy `static/styles.css` still exists, but new layout and fragment work should target the `static/css/` files
+   - Inline `style-*` classes from the original SEC HTML are being systematically replaced by semantic classes defined in `base.css`
 
 ### Key Design Decisions
 
@@ -74,6 +75,12 @@ The core philosophy is **content reusability**: all versions share the same cont
    - Root-level exhibit files (e.g., `exhibit-10m-benefit-plan.html`) are standalone exhibit documents
    - Main document content is in `templates/fragments/`
    - Static assets (CSS, images) are in `static/`
+
+4. **Three-Layer Fragment / Registry Architecture**
+   - **Content layer**: semantic, version-agnostic fragments in `templates/data/fragments/` (no page numbers, no inline `style-*`)
+   - **Metadata layer**: `data/fragments_registry.json` stores fragment IDs, titles, item relationships, order, page numbers and page breaks
+   - **Presentation layer**: version templates in `templates/versions/` plus CSS in `static/css/` render fragments with or without page numbers depending on the version
+   - See `ARCHITECTURE_SUMMARY.md` for detailed examples and the longer-term fragment plan
 
 ## ORIGINAL_SITE Folder
 
@@ -106,17 +113,23 @@ The `ORIGINAL_SITE` folder contains the **original, unmodified files** downloade
 
 ### Completed
 - ✅ Version 1: Original SEC format (exact replica)
-- ✅ Content fragmentation and organization
+- ✅ Content fragmentation and organization (legacy `templates/fragments/` per-item files)
 - ✅ Flask application structure
 - ✅ Menu system for version selection
-- ✅ CSS extraction and organization
-- ✅ Spacing/margin fixes for edge-to-edge layout
+- ✅ Initial CSS extraction and organization
+- ✅ Core three-layer fragment architecture implemented (`templates/data/fragments/`, `data/fragments_registry.json`, `static/css/*`)
+- ✅ Several Item 8 note fragments migrated to semantic HTML and registered in the fragment registry:
+  - `item_8_ntfs_leases`
+  - `item_8_ntfs_debt`
+  - `item_8_ntfs_goodwill_intangible_assets`
+  - `item_8_ntfs_pension_postretirement_benefits`
 
 ### In Progress / Planned
 - 🚧 Version 2: Floating navigation
 - 🚧 Version 3: Pagination
 - 🚧 Versions 4-9: Additional UX enhancements (TBD)
 - 🚧 Version 10: All enhancements combined
+- 🚧 Continue migrating remaining Item 8 note fragments (e.g., commitments & contingencies, stockholders' equity) into `templates/data/fragments/` and `data/fragments_registry.json`
 
 ## File Structure
 
@@ -126,42 +139,55 @@ FRUX/
 ├── requirements.txt                # Python dependencies
 ├── README.md                       # Project documentation
 ├── SETUP.md                        # Setup instructions
+├── SETUP_COMPLETE.md               # Notes on completed setup / refactors
 ├── Procfile                        # Deployment configuration
 ├── index.html                      # Original full document (backup)
-├── styles.css                      # CSS file (root level, may be duplicate)
 ├── exhibit-*.html                  # Standalone exhibit documents
 ├── context/                        # Context and reference materials
 │   ├── ORIGINAL_SITE/             # Original SEC files (reference)
 │   └── PROJECT_SUMMARY.md         # This file
-├── static/                         # Static assets
-│   ├── styles.css                 # Main CSS file
-│   └── itw-20241231_g1.jpg        # Company logo
-└── templates/                      # Jinja2 templates
+├── data/
+│   └── fragments_registry.json    # Fragment metadata (order, pages, titles)
+├── static/
+│   └── css/                       # Shared and version-specific CSS
+│       ├── base.css               # Shared semantic styles (tables, text, spacing)
+│       ├── version1.css           # Version 1 (SEC-like) presentation
+│       └── version2.css           # Version 2 (enhanced UX) presentation
+└── templates/
     ├── menu.html                  # Main menu page
-    ├── version1.html              # Version 1 template
-    └── fragments/                 # Content fragments
-        ├── head.html
-        ├── title_page.html        # Title page (extracted from header.html)
-        ├── contents.html          # Table of contents
-        ├── item_1.html            # Item 1: Business
-        ├── item_2.html            # Item 2: Properties
-        ├── item_3.html            # Item 3: Legal Proceedings
-        ├── item_4.html            # Item 4: Mine Safety Disclosures
-        ├── item_5.html            # Item 5: Market for Registrant's Common Equity
-        ├── item_6.html            # Item 6: Reserved
-        ├── item_7.html            # Item 7: Management's Discussion and Analysis
-        ├── item_8.html            # Item 8: Financial Statements and Supplementary Data
-        ├── item_9.html            # Item 9: Changes in and Disagreements With Accountants
-        ├── item_10.html           # Item 10: Directors, Executive Officers and Corporate Governance
-        ├── item_11.html           # Item 11: Executive Compensation
-        ├── item_12.html           # Item 12: Security Ownership
-        ├── item_13.html           # Item 13: Certain Relationships and Related Transactions
-        ├── item_14.html           # Item 14: Principal Accountant Fees and Services
-        ├── item_15.html           # Item 15: Exhibit and Financial Statement Schedules
-        ├── item_16.html           # Item 16: Form 10-K Summary
-        └── closing.html
-        # Legacy files (preserved for reference, not used in current structure):
-        # header.html, part1.html, part2.html, part3.html, part4.html
+    ├── versions/
+    │   ├── version1.html          # Version 1 template
+    │   └── version2.html          # Version 2 template
+    ├── fragments/                 # Legacy whole-item fragments (still available)
+    │   ├── head.html
+    │   ├── title_page.html
+    │   ├── contents.html
+    │   ├── item_1.html
+    │   ├── item_2.html
+    │   ├── item_3.html
+    │   ├── item_4.html
+    │   ├── item_5.html
+    │   ├── item_6.html
+    │   ├── item_7.html
+    │   ├── item_8.html
+    │   ├── item_9.html
+    │   ├── item_10.html
+    │   ├── item_11.html
+    │   ├── item_12.html
+    │   ├── item_13.html
+    │   ├── item_14.html
+    │   ├── item_15.html
+    │   ├── item_16.html
+    │   └── closing.html
+    └── data/
+        └── fragments/             # Normalized content fragments (in progress)
+            ├── item_1_general.html
+            ├── item_1_business_model.html
+            ├── item_8_ntfs_leases.html
+            ├── item_8_ntfs_debt.html
+            ├── item_8_ntfs_goodwill_intangible_assets.html
+            ├── item_8_ntfs_pension_postretirement_benefits.html
+            └── ...
 ```
 
 ## Development Workflow
