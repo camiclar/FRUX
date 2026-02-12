@@ -19,6 +19,10 @@ body {
   margin-bottom: 18.6667px;
 }
 
+.no-margin-bottom {
+  margin-bottom: 0 !important;
+}
+
 .heading-1 {
   color: #000000;
   font-family: 'Times New Roman', sans-serif;
@@ -77,6 +81,17 @@ body {
   font-size: 10pt;
   font-weight: 700;
   line-height: 120%;
+  margin: 0;
+  padding: 0;
+  margin-top: 18.6667px;
+  margin-bottom: 18.6667px;
+}
+
+.signatures-heading {
+  font-size: 10pt;
+  font-weight: 700;
+  line-height: 120%;
+  text-align: center;
   margin: 0;
   padding: 0;
   margin-top: 18.6667px;
@@ -268,6 +283,14 @@ body {
   margin: 18.6667px 0;
 }
 
+/* Exhibit table container - centered with SEC-style side padding */
+.table-container-exhibit {
+  text-align: center;
+  margin: 18.6667px 0;
+  padding-left: 13.5pt;
+  padding-right: 13.5pt;
+}
+
 .table-container-top-margin {
   margin-top: 5pt;
   text-align: center;
@@ -280,6 +303,11 @@ body {
   margin-bottom: 5pt;
   vertical-align: text-bottom;
   width: 100%;
+}
+
+/* Exhibit list table - SEC styling */
+.table-exhibit {
+  width: 95.684%;
 }
 
 /* Lease maturities table - fixed width to match SEC (504pt) */
