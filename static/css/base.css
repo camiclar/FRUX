@@ -574,3 +574,75 @@ body {
 .table-goodwill-changes tbody .table-text-header {
   font-size: 9pt;
 }
+
+/* Table of Contents - SEC-style layout */
+.toc {
+  margin-top: 18.6667px;
+  margin-bottom: 36px;
+}
+
+.toc-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 5pt;
+}
+
+.toc-table td {
+  padding: 2px 1pt;
+  color: #000000;
+  font-family: 'Times New Roman', sans-serif;
+  font-size: 10pt;
+  font-weight: 400;
+  line-height: 120%;
+  vertical-align: top;
+}
+
+.toc-part-row .toc-part-cell {
+  text-align: center;
+  font-weight: 700;
+  text-decoration: underline;
+  padding-top: 9pt;
+  padding-bottom: 4pt;
+}
+
+.toc-item-row .toc-item-label {
+  width: 15%;
+  padding-left: 11.25pt;
+}
+
+.toc-item-row .toc-item-title {
+  width: 75%;
+}
+
+.toc-item-row .toc-page {
+  width: 10%;
+  text-align: right;
+  padding-right: 11.25pt;
+}
+
+.toc-link,
+.toc-part-link {
+  color: #0000ff;
+  text-decoration: underline;
+}
+
+.toc-link:visited,
+.toc-part-link:visited {
+  color: #0000ff;
+}
+
+.toc-link:hover,
+.toc-part-link:hover {
+  text-decoration: underline;
+}
+
+/* Center the TOC heading only within the TOC section */
+.toc .section-heading {
+  text-align: center;
+}
+
+/* Bottom border line under the Table of Contents (no page number) */
+.toc-bottom-row td {
+  padding-top: 4pt;
+  border-bottom: 3pt double #000000;
+}

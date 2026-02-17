@@ -12,7 +12,7 @@
     {% from 'macros/fragment_macros.html' import render_fragment %}
     
     {% for fragment in fragments %}
-        {{ render_fragment(fragment, version='2') }}
+        {{ render_fragment(fragment, version='2', all_fragments=fragments) }}
     {% endfor %}
 </body>
 </html>

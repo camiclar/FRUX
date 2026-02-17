@@ -1,14 +1,17 @@
 {# Fragment rendering macros for different versions #}
 
-{% macro render_fragment(fragment, version='1') %}
+{% macro render_fragment(fragment, version='1', all_fragments=None) %}
   {% if version == '1' %}
     {# Version 1: Include page numbers and horizontal lines #}
     {# Special handling for title_page and table_of_contents - they have their own styling #}
     {% if fragment.id == 'title_page' or fragment.id == 'table_of_contents' %}
-      {% include 'data/fragments/' + fragment.file %}
+      {% with all_fragments=all_fragments %}
+        {% include 'data/fragments/' + fragment.file %}
+      {% endwith %}
     {% else %}
       <section class="fragment" 
                data-fragment-id="{{ fragment.id }}"
+               id="{{ fragment.id }}"
                {% if fragment.page_numbers %}data-page-start="{{ fragment.page_numbers[0] }}"{% endif %}
                {% if fragment.page_breaks %}data-page-end="{{ fragment.page_breaks[-1] }}"{% endif %}>
         {% set content = fragment.file %}
@@ -28,7 +31,26 @@
     {# Version 2: No page numbers, enhanced styling #}
     {# Special handling for title_page and table_of_contents - they have their own styling #}
     {% if fragment.id == 'title_page' or fragment.id == 'table_of_contents' %}
-      {% include 'data/fragments/' + fragment.file %}
+      {% with all_fragments=all_fragments %}
+        {% include 'data/fragments/' + fragment.file %}
+      {% endwith %}
+    {% else %}
+      <section class="fragment" 
+               data-fragment-id="{{ fragment.id }}"
+               id="{{ fragment.id }}">
+        <h2 class="fragment-title">{{ fragment.title }}</h2>
+        <div class="fragment-content">
+          {% include 'data/fragments/' + fragment.file %}
+        </div>
+      </section>
+    {% endif %}
+  {% elif version == '3' %}
+    {# Version 3: Pagination - No page numbers, with titles #}
+    {# Special handling for title_page and table_of_contents - they have their own styling #}
+    {% if fragment.id == 'title_page' or fragment.id == 'table_of_contents' %}
+      {% with all_fragments=all_fragments %}
+        {% include 'data/fragments/' + fragment.file %}
+      {% endwith %}
     {% else %}
       <section class="fragment" 
                data-fragment-id="{{ fragment.id }}"

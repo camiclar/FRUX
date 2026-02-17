@@ -12,7 +12,7 @@
     {% if fragments %}
     {% from 'macros/fragment_macros.html' import render_fragment %}
     {% for fragment in fragments %}
-        {{ render_fragment(fragment, version='1') }}
+        {{ render_fragment(fragment, version='1', all_fragments=fragments) }}
     {% endfor %}
     {% else %}
     {% include 'data/fragments/title_page.html' %}

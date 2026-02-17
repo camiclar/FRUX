@@ -36,6 +36,10 @@ def view_version(version):
         if fragments:
             return render_template('version2.html', fragments=fragments)
         return f"Version {version} requires fragments. Please set up fragments first.", 404
+    elif version == 3:
+        if fragments:
+            return render_template('version3.html', fragments=fragments)
+        return f"Version {version} requires fragments. Please set up fragments first.", 404
     else:
         return f"Version {version} coming soon!", 404
 

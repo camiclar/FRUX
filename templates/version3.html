@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITW 10-K - Version 3 (Pagination)</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/version3.css') }}">
+</head>
+<body style="margin: 0; padding: 0;">
+    {% from 'macros/fragment_macros.html' import render_fragment %}
+    
+    <!-- Pagination Navigation -->
+    <div class="pagination-nav" id="paginationNav">
+        <button class="nav-button prev-button" id="prevButton" onclick="showPreviousFragment()" disabled>
+            ← Previous
+        </button>
+        <span class="page-indicator" id="pageIndicator">1 / {{ fragments|length }}</span>
+        <button class="nav-button next-button" id="nextButton" onclick="showNextFragment()">
+            Next →
+        </button>
+    </div>
+
+    <!-- Fragments Container -->
+    <div class="fragments-container">
+        {% for fragment in fragments %}
+            <div class="fragment-page" data-fragment-index="{{ loop.index0 }}" {% if loop.index0 != 0 %}style="display: none;"{% endif %}>
+                {{ render_fragment(fragment, version='3', all_fragments=fragments) }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        let currentFragmentIndex = 0;
+        const totalFragments = {{ fragments|length }};
+        const fragmentPages = document.querySelectorAll('.fragment-page');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        const pageIndicator = document.getElementById('pageIndicator');
+
+        function updateNavigation() {
+            // Update button states
+            prevButton.disabled = currentFragmentIndex === 0;
+            nextButton.disabled = currentFragmentIndex === totalFragments - 1;
+            
+            // Update page indicator
+            pageIndicator.textContent = `${currentFragmentIndex + 1} / ${totalFragments}`;
+            
+            // Show/hide fragments
+            fragmentPages.forEach((page, index) => {
+                page.style.display = index === currentFragmentIndex ? 'block' : 'none';
+            });
+            
+            // Scroll to top when changing pages
+            window.scrollTo(0, 0);
+        }
+
+        function showNextFragment() {
+            if (currentFragmentIndex < totalFragments - 1) {
+                currentFragmentIndex++;
+                updateNavigation();
+            }
+        }
+
+        function showPreviousFragment() {
+            if (currentFragmentIndex > 0) {
+                currentFragmentIndex--;
+                updateNavigation();
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+                event.preventDefault();
+                showNextFragment();
+            } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                showPreviousFragment();
+            }
+        });
+
+        // In pagination layout, make TOC links jump to the right fragment page
+        document.addEventListener('click', function(event) {
+            const link = event.target.closest('.toc a[href^="#"]');
+            if (!link) {
+                return;
+            }
+            const targetId = link.getAttribute('href').slice(1);
+            const targetIndex = Array.from(fragmentPages).findIndex(page =>
+                page.querySelector(`.fragment[id="${targetId}"]`)
+            );
+            if (targetIndex >= 0) {
+                event.preventDefault();
+                currentFragmentIndex = targetIndex;
+                updateNavigation();
+            }
+        });
+
+        // Initialize
+        updateNavigation();
+    </script>
+</body>
+</html>
