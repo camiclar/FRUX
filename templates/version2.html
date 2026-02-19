@@ -3,16 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ITW 10-K - Version 2 (No Page Numbers)</title>
+    <title>ITW 10-K - Version 2 (Side Navigation)</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/version2.css') }}">
 </head>
 <body style="margin: 0; padding: 0;">
-    {% from 'macros/fragment_macros.html' import render_fragment %}
-    
-    {% for fragment in fragments %}
-        {{ render_fragment(fragment, version='2', all_fragments=fragments) }}
-    {% endfor %}
+    <!-- Side Navigation Toggle (Mobile/Tablet) -->
+    <button id="side-nav-toggle" class="side-nav-toggle" aria-label="Toggle navigation">
+        ☰ Menu
+    </button>
+
+    <div class="main-wrapper">
+        <!-- Side Navigation -->
+        <nav id="side-nav" class="side-nav" role="navigation" aria-label="Document navigation">
+            <ul id="side-nav-list" class="side-nav-list"></ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main>
+            {% from 'macros/fragment_macros.html' import render_fragment %}
+            
+            {% for fragment in fragments %}
+                {{ render_fragment(fragment, version='2', all_fragments=fragments) }}
+            {% endfor %}
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/side-nav.js') }}"></script>
 </body>
 </html>

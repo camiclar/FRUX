@@ -1,35 +1,231 @@
-/* Version 2: Enhanced UX - No page numbers, modern styling */
+/* Version 2: Side Navigation - Identical to Version 1 except for side navigation */
 
 @import 'base.css';
 
-/* Hide page numbers and horizontal lines */
+/* Page Numbers - Match Version 1 (centered) */
 .page-number {
-  display: none !important;
+  height: 29pt;
+  position: relative;
+  width: 100%;
 }
 
+.page-number-content {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  color: #000000;
+  font-family: 'Times New Roman', sans-serif;
+  font-size: 10pt;
+  font-weight: 400;
+  line-height: 120%;
+}
+
+/* Horizontal line after page number */
 .page-break-line {
-  display: none !important;
+  border-top: 1px solid #000;
+  margin-bottom: 45pt;
+  padding: 0;
 }
 
 .page-break {
-  display: none !important;
+  page-break-after: always;
 }
 
-/* Modern enhancements */
-.fragment {
-  margin-bottom: 2rem;
-  padding: 1rem;
+/* Version 2 should be visually identical to Version 1 */
+/* All styling comes from base.css, same as Version 1 */
+
+/* Side Navigation Styles */
+body {
+    position: relative;
 }
 
-.section-heading {
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  border-bottom: 2px solid #e0e0e0;
-  padding-bottom: 0.5rem;
+.main-wrapper {
+    display: flex;
+    gap: 2rem;
+    max-width: 100%;
 }
 
-.body-text {
-  margin-bottom: 1rem;
-  line-height: 1.6;
+.side-nav {
+    position: sticky;
+    top: 1rem;
+    left: 0;
+    width: 250px;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    overflow-x: visible;
+    background-color: transparent;
+    z-index: 100;
+    flex-shrink: 0;
+    align-self: flex-start;
 }
 
+.side-nav-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 101;
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    padding: 0.5rem;
+    cursor: pointer;
+    font-family: 'Times New Roman', serif;
+    font-size: 10pt;
+}
+
+.side-nav-toggle:hover {
+    background-color: #f0f0f0;
+}
+
+.side-nav-list {
+    list-style: none;
+    padding: 0.5rem;
+    margin: 0;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.side-nav-item {
+    margin: 0;
+}
+
+.side-nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.75rem;
+    color: #000000;
+    text-decoration: none;
+    font-family: 'Times New Roman', serif;
+    font-size: 9pt;
+    transition: background-color 0.2s ease;
+    border-left: 3px solid transparent;
+    gap: 0.5rem;
+}
+
+.side-nav-link > span {
+    flex: 1;
+    min-width: 0;
+}
+
+.side-nav-link:hover {
+    background-color: #f5f5f5;
+    color: #000000;
+}
+
+.side-nav-link.active {
+    background-color: #e8e8e8;
+    color: #000000;
+    border-left-color: #000000;
+    font-weight: 700;
+}
+
+.side-nav-item.h2-item .side-nav-link {
+    font-weight: 700;
+    font-size: 10pt;
+    padding: 0.75rem;
+}
+
+.side-nav-item.h3-item .side-nav-link {
+    padding-left: 1.5rem;
+    font-size: 9pt;
+    font-weight: 400;
+}
+
+.side-nav-item.h4-item .side-nav-link {
+    padding-left: 2.5rem;
+    font-size: 8pt;
+    font-weight: 400;
+}
+
+.side-nav-item.h3-item.expanded .side-nav-chevron {
+    transform: rotate(180deg);
+}
+
+.side-nav-item.h3-item:not(.expanded) .side-nav-chevron {
+    transform: rotate(0deg);
+}
+
+.side-nav-submenu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.side-nav-item.expanded .side-nav-submenu {
+    max-height: 2000px;
+}
+
+.side-nav-chevron {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+    font-size: 8pt;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    color: #666666;
+}
+
+.side-nav-item.h2-item:not(.expanded) .side-nav-chevron {
+    transform: rotate(0deg);
+}
+
+.side-nav-item.h2-item.expanded .side-nav-chevron {
+    transform: rotate(180deg);
+}
+
+main {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Mobile and tablet styles */
+@media (max-width: 1023px) {
+    .main-wrapper {
+        flex-direction: column;
+    }
+
+    .side-nav-toggle {
+        display: block;
+    }
+
+    .side-nav {
+        width: 0;
+        position: fixed;
+        top: 4rem;
+        left: 1rem;
+        transition: width 0.3s ease;
+        max-height: calc(100vh - 5rem);
+    }
+
+    .side-nav.open {
+        width: 250px;
+    }
+
+    .side-nav:not(.open) .side-nav-list {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    .side-nav.open .side-nav-list {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+}
+
+/* Ensure fragments have proper spacing when side nav is present */
+@media (min-width: 1024px) {
+    .main-wrapper {
+        padding-left: 0;
+    }
+}

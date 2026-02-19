@@ -28,8 +28,7 @@
       </section>
     {% endif %}
   {% elif version == '2' %}
-    {# Version 2: No page numbers, enhanced styling #}
-    {# Special handling for title_page and table_of_contents - they have their own styling #}
+    {# Version 2: Same as Version 1 but with side nav - no fragment titles, include page numbers #}
     {% if fragment.id == 'title_page' or fragment.id == 'table_of_contents' %}
       {% with all_fragments=all_fragments %}
         {% include 'data/fragments/' + fragment.file %}
@@ -37,11 +36,18 @@
     {% else %}
       <section class="fragment" 
                data-fragment-id="{{ fragment.id }}"
-               id="{{ fragment.id }}">
-        <h2 class="fragment-title">{{ fragment.title }}</h2>
-        <div class="fragment-content">
-          {% include 'data/fragments/' + fragment.file %}
-        </div>
+               id="{{ fragment.id }}"
+               {% if fragment.page_numbers %}data-page-start="{{ fragment.page_numbers[0] }}"{% endif %}
+               {% if fragment.page_breaks %}data-page-end="{{ fragment.page_breaks[-1] }}"{% endif %}>
+        {% set content = fragment.file %}
+        {% include 'data/fragments/' + content %}
+
+        {% if fragment.page_breaks and fragment.page_breaks|length > 0 %}
+          <div class="page-number">
+            <div class="page-number-content">{{ fragment.page_breaks[-1] }}</div>
+          </div>
+          <hr class="page-break page-break-line"/>
+        {% endif %}
       </section>
     {% endif %}
   {% elif version == '3' %}
