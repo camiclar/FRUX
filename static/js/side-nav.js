@@ -110,7 +110,15 @@
     }
 
     function getCurrentSection() {
-        const headings = document.querySelectorAll('main h2.part-heading[id], main h3.item-heading[id], main h4.section-heading[id]');
+        // Prefer headings within the active pagination page (Version 2)
+        let container = document.querySelector('.pagination-page.active-page');
+        if (!container) {
+            // Fallback: use main if no active page marker is present
+            container = document.querySelector('main');
+        }
+        if (!container) return null;
+
+        const headings = container.querySelectorAll('h2.part-heading[id], h3.item-heading[id], h4.section-heading[id]');
         let currentSection = null;
         const scrollPosition = window.scrollY + 100;
 

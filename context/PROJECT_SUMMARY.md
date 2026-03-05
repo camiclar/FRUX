@@ -6,9 +6,12 @@
 
 ## Overarching Goal
 
-The primary goal of this project is to create **10 different versions** of the same 10-K document, each with one UX improvement. Version 1 is the baseline that replicates the exact appearance of the document as it appears on the SEC website. Version 2, 3, and so on use the **same HTML fragments** as version 1 but each add a single UX enhancement—e.g. side navigation, pagination, search—so we can compare and combine improvements.
+The primary goal of this project is to present the same 10-K document in **two versions**:
 
-The core philosophy is **content reusability**: all versions share the same content fragments and differ only in presentation (layout, styling, and interactive features).
+- **Version 1**: Baseline that replicates the exact appearance of the document as it appears on the SEC website.
+- **Version 2**: A “good UX” version that applies multiple usability improvements (e.g. side navigation, item-level pagination) while using the same underlying content.
+
+The core philosophy is **content reusability**: both versions share the same content fragments and differ only in presentation (layout, styling, and interactive features).
 
 ## Technical Requirements
 
@@ -24,13 +27,13 @@ The core philosophy is **content reusability**: all versions share the same cont
    - All content fragments, including **title page and table of contents**, live in `templates/data/fragments/` (e.g. `title_page.html`, `table_of_contents.html`, `item_1_general.html`, `item_8_ntfs_leases.html`, `part_iv.html`). Order and metadata are defined in `data/fragments_registry.json`. The fragment macro includes from `data/fragments/` for every fragment. The `templates/fragments/` folder has been removed.
 
 2. **Version System**
-   - Each version is a separate template in `templates/` (e.g., `version1.html`, `version2.html`). All versions use the same HTML fragments from `templates/data/fragments/` and the registry; they differ only in presentation (CSS, JavaScript, layout).
+   - Each version is a separate template in `templates/` (`version1.html`, `version2.html`). Both versions use the same HTML fragments from `templates/data/fragments/` and the registry; they differ only in presentation (CSS, JavaScript, layout).
    - **Version 1**: Baseline—SEC-like appearance (page numbers, etc.).
-   - **Version 2+**: Same fragments, each version adds one UX improvement (e.g. side navigation, pagination). The Flask app routes `/version/<number>` to the appropriate template.
+   - **Version 2**: Same fragments, with multiple UX improvements combined (e.g. side navigation and item-level pagination). The Flask app routes `/version/1` and `/version/2` to the appropriate templates.
 
 3. **Flask Application** (`app.py`)
    - Main route (`/`) serves the menu page for version selection
-   - Version routes (`/version/<int:version>`) serve the corresponding template with fragments from the registry. Version 1 has a fallback (title + ToC only) when the registry is empty; version 2+ require the registry.
+   - Version routes (`/version/1` and `/version/2`) serve the corresponding template with fragments from the registry. Version 1 has a fallback (title + ToC only) when the registry is empty; Version 2 requires the registry.
 
 4. **Styling**
    - Shared, semantic styles (e.g., `section-heading`, `body-text`, `table-*` classes, page-number helpers, spacing utilities) live in `static/css/base.css`
@@ -90,17 +93,16 @@ The `ORIGINAL_SITE` folder contains the **original, unmodified files** downloade
 ### Completed
 - ✅ **Fragment cleanup complete**: All content, including title page and table of contents, lives in `templates/data/fragments/`; `data/fragments_registry.json` defines order and metadata. The legacy `templates/fragments/` folder has been removed.
 - ✅ Version 1: Baseline (original SEC format, exact replica)
-- ✅ Version 2: Same fragments as version 1, no page numbers (template and route in place; further UX enhancements can be added here or in version 3+)
+- ✅ Version 2: Same fragments as Version 1, with combined UX enhancements:
+  - Sticky side navigation that lists Parts, Items, and selected subsections
+  - Item-level pagination: each page shows one full Item (as defined by a row in the table of contents)
 - ✅ Flask application structure and menu for version selection
 - ✅ Three-layer fragment architecture: `templates/data/fragments/`, `data/fragments_registry.json`, version templates + `static/css/`
 - ✅ Consolidated version templates: single `version1.html` and `version2.html` (no separate _test templates)
 
 ### Next Phase
-- **Version 2, 3, … each with one UX improvement**: Use the same HTML fragments as version 1; each new version adds a single UX enhancement for easy comparison and future combination. Examples:
-  - **Version 2**: Side navigation (sticky or floating TOC / section nav)
-  - **Version 3**: Pagination (page-by-page or section-by-section)
-  - **Version 4+**: Search, print-optimized layout, mobile tweaks, etc.
-- **Version 10** (or final): Combine all chosen enhancements into one version.
+- Evaluate additional UX improvements (e.g. search, print-optimized layout, mobile-specific tweaks, accessibility refinements).
+- If needed, evolve Version 2 further rather than adding more numbered versions.
 
 ## File Structure
 
@@ -120,11 +122,11 @@ FRUX/
 │   └── css/                       # Shared and version-specific CSS
 │       ├── base.css               # Shared semantic styles (tables, text, spacing)
 │       ├── version1.css           # Version 1 (SEC-like) presentation
-│       └── version2.css           # Version 2 presentation
+│       └── version2.css           # Version 2 (side nav + item-level pagination) presentation
 └── templates/
     ├── menu.html                  # Main menu page
     ├── version1.html              # Version 1 (baseline); uses fragments when registry has data
-    ├── version2.html              # Version 2 (same fragments, no page numbers; add UX enhancements here or in v3+)
+    ├── version2.html              # Version 2 (combined UX: side nav + item-level pagination)
     ├── macros/
     │   └── fragment_macros.html   # Renders a fragment (includes from data/fragments/)
     └── data/
