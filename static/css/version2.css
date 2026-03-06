@@ -2,34 +2,23 @@
 
 @import 'base.css';
 
-/* Page Numbers - Match Version 1 (centered) */
-.page-number {
-  height: 29pt;
-  position: relative;
-  width: 100%;
+/* Version 2: Roboto everywhere, body text 16pt */
+body,
+body * {
+    font-family: 'Roboto', sans-serif !important;
+}
+body,
+main .body-text,
+main .body-text-inline {
+    font-size: 16px;
 }
 
-.page-number-content {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-  color: #000000;
-  font-family: 'Times New Roman', sans-serif;
-  font-size: 10pt;
-  font-weight: 400;
-  line-height: 120%;
-}
-
-/* Horizontal line after page number */
-.page-break-line {
-  border-top: 1px solid #000;
-  margin-bottom: 45pt;
-  padding: 0;
-}
-
+/* Version 2: Hide page numbers and page breaks (they are shown in Version 1 only) */
+.page-number,
+.page-number-content,
+.page-break-line,
 .page-break {
-  page-break-after: always;
+  display: none !important;
 }
 
 /* Version 2 should be visually identical to Version 1 */
@@ -52,8 +41,9 @@ body {
     left: 0;
     width: 250px;
     max-height: calc(100vh - 0px);
-    overflow-y: auto;
-    overflow-x: visible;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     background-color: #f7f7f7;
     z-index: 100;
     flex-shrink: 0;
@@ -87,6 +77,63 @@ body {
     background-color: transparent;
     width: 100%;
     box-sizing: border-box;
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* Pagination: Previous/Next below the nav list, show item labels */
+.side-nav .pagination-nav {
+    flex-shrink: 0;
+    border-top: 1px solid #dddddd;
+    padding: 0.75rem 0.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0.5rem;
+    background-color: #f7f7f7;
+}
+
+.side-nav .nav-button {
+    padding: 0.5rem 0.75rem;
+    font-size: 9pt;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.side-nav .nav-button.prev-button {
+    text-align: left;
+    background-color: #ffffff;
+    border-color: #cccccc;
+}
+
+.side-nav .nav-button.prev-button:hover:not(:disabled) {
+    background-color: #eeeeee;
+}
+
+.side-nav .nav-button.prev-button:disabled {
+    background-color: #f0f0f0;
+    color: #999999;
+    cursor: not-allowed;
+}
+
+.side-nav .nav-button.next-button {
+    text-align: right;
+    background-color: #1976d2;
+    color: #ffffff;
+    border-color: #1976d2;
+}
+
+.side-nav .nav-button.next-button:hover:not(:disabled) {
+    background-color: #1565c0;
+}
+
+.side-nav .nav-button.next-button:disabled {
+    background-color: #b0bec5;
+    color: #ffffff;
+    border-color: #b0bec5;
+    cursor: not-allowed;
 }
 
 .side-nav-item {
@@ -153,16 +200,21 @@ body {
     transition: max-height 0.3s ease;
 }
 
-.side-nav-item.expanded .side-nav-submenu {
+.side-nav-item.expanded > .side-nav-submenu {
     max-height: 2000px;
 }
 
 .side-nav-chevron {
     flex-shrink: 0;
     position: absolute;
-    right: 0.75rem;
-    top: 50%;
-    transform: translateY(-50%);
+    right: 0;
+    top: 0;
+    width: 2.5rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(0);
     transition: transform 0.3s ease;
     font-size: 8pt;
     font-weight: 700;
@@ -172,24 +224,27 @@ body {
 }
 
 .side-nav-item.h2-item:not(.expanded) .side-nav-chevron {
-    transform: translateY(-50%) rotate(0deg);
+    transform: rotate(0deg);
 }
 
 .side-nav-item.h2-item.expanded .side-nav-chevron {
-    transform: translateY(-50%) rotate(180deg);
+    transform: rotate(180deg);
 }
 
 .side-nav-item.h3-item.expanded .side-nav-chevron {
-    transform: translateY(-50%) rotate(180deg);
+    transform: rotate(180deg);
 }
 
 .side-nav-item.h3-item:not(.expanded) .side-nav-chevron {
-    transform: translateY(-50%) rotate(0deg);
+    transform: rotate(0deg);
 }
 
 main {
     flex: 1;
     min-width: 0;
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
 }
 
 /* Mobile and tablet styles */

@@ -78,6 +78,53 @@ body {
   /* margin-bottom: 18.6667px; */
 }
 
+/* Section heading (h4) + following paragraph on same line (e.g. "Common Stock Data — ...") */
+h4.section-heading:has(+ .body-text.body-text-inline),
+h4.section-heading:has(+ .body-text-inline) {
+  display: inline;
+}
+
+h4.section-heading + .body-text.body-text-inline,
+h4.section-heading + .body-text-inline {
+  display: inline;
+  margin-left: 0.5em;
+  margin-top: 0;
+  margin-bottom: 18.6667px;
+}
+
+/* h5 section heading inside body-text: keep on same line as em-dash and following text */
+.body-text > h5.section-heading {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-right: 0.25em;
+}
+
+/* h5 + following p.body-text-inline as siblings: show on same line (e.g. "Description of business — ...") */
+h5.section-heading:has(+ p.body-text-inline) {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-right: 0.25em;
+}
+
+h5.section-heading + p.body-text-inline {
+  display: inline;
+  margin: 0 0 18.6667px 0;
+}
+
+/* spacing after an inline paragraph that followed an h5 */
+h5.section-heading + p.body-text-inline + * {
+  margin-top: 0;
+}
+
+/* Wrapper for h5 + body-text-inline blocks: vertical padding to separate each block */
+.body-text-block,
+div:has(> h5.section-heading):has(> p.body-text-inline) {
+  padding-top: 18.6667px;
+  padding-bottom: 18.6667px;
+}
+
 .part-heading {
   color: #000000;
   font-family: 'Times New Roman', sans-serif;

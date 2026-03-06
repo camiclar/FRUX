@@ -15,11 +15,14 @@
             .replace(/^-+|-+$/g, '');
     }
 
-    // Ensure heading has unique ID (never reuse fragment ID to avoid duplicates with section)
+    // Ensure heading has unique ID. Use containing fragment/page as prefix so duplicate
+    // heading text (e.g. "THE ITW BUSINESS MODEL" in Item 1 and Item 7) get different IDs.
     function ensureHeadingId(heading) {
-        if (!heading.id) {
-            heading.id = generateId(heading.textContent.trim());
-        }
+        if (heading.id) return heading.id;
+        const slug = generateId(heading.textContent.trim());
+        const container = heading.closest('.fragment') || heading.closest('.pagination-page');
+        const prefix = container ? (container.id || container.getAttribute('data-page-id') || container.getAttribute('data-fragment-id') || '') : '';
+        heading.id = prefix ? (prefix + '-' + slug) : slug;
         return heading.id;
     }
 
@@ -214,6 +217,12 @@
         if (!navList) return;
 
         buildNavigation();
+
+        // Start with all H2 and H3 collapsed; updateActiveState will expand only the current section's branch
+        document.querySelectorAll('.side-nav-item.h2-item, .side-nav-item.h3-item').forEach(function(item) {
+            item.classList.remove('expanded');
+        });
+        updateActiveState();
 
         navList.addEventListener('click', function(e) {
             if (e.target.closest('.side-nav-chevron')) {
