@@ -1,0 +1,31 @@
+/* Version 3A: Based on Version 2 (side nav + pagination + Roboto) with sticky breadcrumbs */
+
+@import 'version2.css';
+
+/* Breadcrumbs sticky bar at top of main content */
+.breadcrumbs {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  margin: 0 0 1rem 0;
+  padding: 0.5rem 0;
+  font-size: 10pt;
+  color: #555555;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.breadcrumb-segment {
+  font-weight: 400;
+  text-decoration: none;
+  color: inherit;
+}
+
+.breadcrumb-segment:first-child {
+  font-weight: 700; /* "10-K" */
+}
+
+.breadcrumb-separator {
+  color: #999999;
+}
+

@@ -301,3 +301,23 @@ main {
         overflow-y: auto;
     }
 }
+
+.part-heading {
+    font-size: 21pt;
+    padding-top: 2rem;
+}
+
+.item-heading {
+    font-size: 18pt;
+    padding-top: 1.5rem;
+}
+
+h4.section-heading {
+    font-size: 16pt;
+    padding-top: 1.25rem;
+}
+
+h5.section-heading {
+    font-size: 14pt;
+    padding-top: 1rem;
+}

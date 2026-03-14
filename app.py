@@ -33,14 +33,23 @@ def build_item_pages(fragments):
     current_item = None
     current_page = None
 
+    # Helper: items that should be grouped together on one Part III page
+    part_iii_items = {"10", "11", "12", "13", "14"}
+
     for frag in fragments:
         frag_id = frag.get("id")
         item = frag.get("item")
         title = frag.get("title")
 
-        if frag_id in ("title_page", "table_of_contents"):
+        if frag_id in ("title_page", "table_of_contents", "part_iv"):
             # Special standalone pages
-            label = "Title Page" if frag_id == "title_page" else "Table of Contents"
+            if frag_id == "title_page":
+                label = "Title Page"
+            elif frag_id == "table_of_contents":
+                label = "Table of Contents"
+            else:
+                # For PART IV, keep the fragment title but show just "Part IV" in nav labels
+                label = "Part IV"
             pages.append(
                 {
                     "id": frag_id,
@@ -52,19 +61,36 @@ def build_item_pages(fragments):
             current_item = None
             current_page = None
         elif item:
-            # Group all fragments for the same item into one page
-            if current_item == item and current_page is not None:
-                current_page["fragment_ids"].append(frag_id)
+            # Special case: Part III items 10–14 should all share one page
+            if item in part_iii_items:
+                if current_item in part_iii_items and current_page is not None:
+                    # Continue the existing Part III page (items 10–14)
+                    current_page["fragment_ids"].append(frag_id)
+                else:
+                    # Start the Part III items page with the first of 10–14
+                    current_item = item
+                    current_page = {
+                        "id": frag_id,
+                        "item": item,  # keep the first item's number for labeling (e.g., "10")
+                        "label": title or f"Item {item}",
+                        "type": "item",
+                        "fragment_ids": [frag_id],
+                    }
+                    pages.append(current_page)
             else:
-                current_item = item
-                current_page = {
-                    "id": frag_id,
-                    "item": item,
-                    "label": title or f"Item {item}",
-                    "type": "item",
-                    "fragment_ids": [frag_id],
-                }
-                pages.append(current_page)
+                # Default: each distinct item value gets its own page
+                if current_item == item and current_page is not None:
+                    current_page["fragment_ids"].append(frag_id)
+                else:
+                    current_item = item
+                    current_page = {
+                        "id": frag_id,
+                        "item": item,
+                        "label": title or f"Item {item}",
+                        "type": "item",
+                        "fragment_ids": [frag_id],
+                    }
+                    pages.append(current_page)
         else:
             # Fallback: attach miscellaneous fragments to the previous page
             if pages:
@@ -101,6 +127,15 @@ def view_version(version):
         return f"Version {version} requires fragments. Please set up fragments first.", 404
     else:
         return f"Version {version} not available. Only versions 1 and 2 are supported.", 404
+
+@app.route('/version/3a')
+def view_version_3a():
+    """Display Version 3A of the 10-K (based on Version 2 with custom labels and breadcrumbs)"""
+    fragments = load_fragments()
+    if not fragments:
+        return "Version 3A requires fragments. Please set up fragments first.", 404
+    pages = build_item_pages(fragments)
+    return render_template('version3a.html', fragments=fragments, pages=pages)
 
 if __name__ == '__main__':
     print("=" * 60)

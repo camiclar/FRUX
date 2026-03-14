@@ -1,7 +1,8 @@
 /**
- * Side Navigation for 10-K Document
- * Creates a dynamic side navigation from H2 (Parts), H3 (Items), and H4 (Sections)
- * with scroll-based active state updates and expandable sections
+ * Side Navigation for 10-K Document - Version 3A
+ * Based on Version 2 side nav, but with:
+ * - Custom Part labels in the nav
+ * - Breadcrumbs at the top of the page that update with scroll
  */
 
 (function() {
@@ -26,6 +27,24 @@
         return heading.id;
     }
 
+    // Map Part headings to custom labels for Version 3A side nav
+    function getPartNavLabel(rawText) {
+        const norm = rawText.replace(/\s+/g, ' ').trim().toUpperCase();
+        if (norm.startsWith('PART I')) {
+            return 'PART I: Business & Risks';
+        }
+        if (norm.startsWith('PART II')) {
+            return 'PART II: Financial Performance';
+        }
+        if (norm.startsWith('PART III')) {
+            return 'PART III: Governance & Compensation';
+        }
+        if (norm.startsWith('PART IV')) {
+            return 'PART IV: Legal Exhibits';
+        }
+        return rawText.trim();
+    }
+
     // Build the navigation structure
     function buildNavigation() {
         const navList = document.getElementById('side-nav-list');
@@ -45,9 +64,10 @@
             if (heading.tagName === 'H2' && heading.classList.contains('sr-only')) return;
 
             const id = ensureHeadingId(heading);
-            const text = heading.textContent.trim();
+            let text = heading.textContent.trim();
 
             if (heading.tagName === 'H2' && heading.classList.contains('part-heading')) {
+                text = getPartNavLabel(text);
                 currentH2 = {
                     element: heading,
                     id,
@@ -107,7 +127,7 @@
             return li;
         }
 
-        // Special top-level entries for Title Page and Table of Contents (Version 2)
+        // Special top-level entries for Title Page and Table of Contents (Version 3A)
         const specials = [];
         if (document.querySelector('.pagination-page[data-page-id="title_page"]')) {
             specials.push({ id: 'title_page', text: 'Title Page', children: [] });
@@ -126,7 +146,7 @@
     }
 
     function getCurrentSection() {
-        // Prefer headings within the active pagination page (Version 2)
+        // Prefer headings within the active pagination page
         let container = document.querySelector('.pagination-page.active-page');
         if (!container) {
             // Fallback: use main if no active page marker is present
@@ -161,6 +181,76 @@
         }
     }
 
+    function updateBreadcrumbs() {
+        const crumbsContainer = document.getElementById('breadcrumbs');
+        if (!crumbsContainer) return;
+
+        const activePage = document.querySelector('.pagination-page.active-page') || document.querySelector('main');
+        if (!activePage) return;
+
+        const activeLink = document.querySelector('.side-nav-link.active');
+        let currentSectionId = null;
+        if (activeLink) {
+            const href = activeLink.getAttribute('href') || '';
+            if (href.startsWith('#')) {
+                currentSectionId = href.slice(1);
+            }
+        }
+
+        const crumbs = [];
+        const links = [];
+
+        // Root crumb: 10-K (link to Title Page)
+        crumbs.push('10-K');
+        links.push('#title_page');
+
+        // Part
+        const partHeading = activePage.querySelector('h2.part-heading');
+        if (partHeading) {
+            crumbs.push(partHeading.textContent.trim());
+            links.push('#' + partHeading.id);
+        }
+
+        // Item (use item number if available)
+        const itemHeading = activePage.querySelector('h3.item-heading');
+        if (itemHeading) {
+            const numSpan = itemHeading.querySelector('.item-number');
+            let itemLabel = numSpan ? numSpan.textContent.trim() : itemHeading.textContent.trim();
+            // Normalize like "ITEM 8." -> "Item 8"
+            itemLabel = itemLabel.replace(/^ITEM\s+/i, 'Item ').replace(/\.$/, '');
+            crumbs.push(itemLabel);
+            links.push('#' + itemHeading.id);
+        }
+
+        // Section (only if current section is an h4/h5/etc. within this page)
+        if (currentSectionId) {
+            const sectionEl = document.getElementById(currentSectionId);
+            if (sectionEl && activePage.contains(sectionEl) &&
+                sectionEl.matches('h4.section-heading, h5.section-heading, h6.section-heading')) {
+                crumbs.push(sectionEl.textContent.trim());
+                links.push('#' + sectionEl.id);
+            }
+        }
+
+        crumbsContainer.innerHTML = '';
+        crumbs.forEach((label, idx) => {
+            const linkHref = links[idx] || null;
+            const el = document.createElement(linkHref ? 'a' : 'span');
+            el.className = 'breadcrumb-segment';
+            if (linkHref) {
+                el.href = linkHref;
+            }
+            el.textContent = label;
+            crumbsContainer.appendChild(el);
+            if (idx < crumbs.length - 1) {
+                const sep = document.createElement('span');
+                sep.className = 'breadcrumb-separator';
+                sep.textContent = ' / ';
+                crumbsContainer.appendChild(sep);
+            }
+        });
+    }
+
     function updateActiveState() {
         const currentSection = getCurrentSection();
         if (!currentSection) return;
@@ -174,6 +264,7 @@
         }
 
         collapseInactiveSections(currentSection);
+        updateBreadcrumbs();
     }
 
     function expandSection(item) {
@@ -287,3 +378,4 @@
         init();
     }
 })();
+

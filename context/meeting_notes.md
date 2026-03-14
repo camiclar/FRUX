@@ -1,5 +1,5 @@
 # Meeting Notes 
-Dec 30, 2025
+## Dec 30, 2025
 - Split Item 5 into 2 sections (see Spencer's email)
 - Also split Item 7
 - Keep part 4 (the exhibits) but don't worry about hyperlinking them
@@ -10,3 +10,8 @@ Dec 30, 2025
   - Decided on having this new version be a down the line thing. Area for future research, likely the next paper.
 - Highlighted areas like Liquidity & Capital Resources have subsections. So the areas under liquidity & capital resources that belong to it have their headers highlited in blue, but the rest of the text is a different color
 - Workiva is the software used to make 10-K documents
+
+## March 6, 2026
+- Version 1: Control
+- Version 2: Add names of the parts. 
+- Version 3: Reordered. Two nav bars. Nav bar 1 ("Quick Access") has Item 1, Item 1A, Item 7, Item 8. Nav bar 2 has all of the items (what's currently in version 2). It's okay that nav bar 2 has duplicates of what's in nav bar 1. Quick access should be expanded on load. Add breadcrumbs.
