@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITW 10-K - Version 3B (3A + Quick Access)</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/version3b.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body style="margin: 0; padding: 0;">
+    {% from 'macros/fragment_macros.html' import render_fragment %}
+
+    <!-- Side Navigation Toggle (Mobile/Tablet) -->
+    <button id="side-nav-toggle" class="side-nav-toggle" aria-label="Toggle navigation">
+        ☰ Menu
+    </button>
+
+    <div class="main-wrapper">
+        <!-- Side Navigation -->
+        <nav id="side-nav" class="side-nav" role="navigation" aria-label="Document navigation">
+            <div class="quick-access" id="quick-access">
+                <button type="button" class="quick-access-header" id="quick-access-toggle" aria-expanded="true" aria-controls="quick-access-list">
+                    <span class="quick-access-title">Quick Access</span>
+                    <span class="quick-access-chevron" aria-hidden="true">▼</span>
+                </button>
+                <ul id="quick-access-list" class="quick-access-list"></ul>
+            </div>
+            <hr class="quick-access-divider" />
+            <ul id="side-nav-list" class="side-nav-list"></ul>
+            <div class="pagination-nav" id="paginationNav">
+                <button class="nav-button prev-button" id="prevButton" disabled></button>
+                <button class="nav-button next-button" id="nextButton"></button>
+            </div>
+        </nav>
+
+        <!-- Main Content with Item-based Pagination -->
+        <main>
+            <div id="breadcrumbs" class="breadcrumbs"></div>
+            <div class="pages-container">
+                {% for page in pages %}
+                    <div class="pagination-page"
+                         data-page-index="{{ loop.index0 }}"
+                         data-page-id="{{ page.id }}"
+                         data-page-short-label="{% if page.item %}Item {{ page.item }}{% else %}{{ page.label }}{% endif %}"
+                         {% if loop.index0 != 0 %}style="display: none;"{% endif %}>
+                        {% for fragment in fragments %}
+                            {% if fragment.id in page.fragment_ids %}
+                                {{ render_fragment(fragment, version='2', all_fragments=fragments) }}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/side-nav-v3b.js') }}"></script>
+    <script>
+        (function() {
+            const pages = Array.from(document.querySelectorAll('.pagination-page'));
+            if (!pages.length) return;
+
+            let currentPageIndex = 0;
+            const totalPages = pages.length;
+            const prevButton = document.getElementById('prevButton');
+            const nextButton = document.getElementById('nextButton');
+
+            function updateNavigation() {
+                prevButton.disabled = currentPageIndex === 0;
+                nextButton.disabled = currentPageIndex === totalPages - 1;
+                var prevLabel = currentPageIndex > 0 ? pages[currentPageIndex - 1].getAttribute('data-page-short-label') : '';
+                var nextLabel = currentPageIndex < totalPages - 1 ? pages[currentPageIndex + 1].getAttribute('data-page-short-label') : '';
+                prevButton.textContent = prevLabel ? '\u2190 ' + prevLabel : '\u2190 Previous';
+                nextButton.textContent = nextLabel ? nextLabel + ' \u2192' : 'Next \u2192';
+
+                pages.forEach((page, index) => {
+                    const isActive = index === currentPageIndex;
+                    page.style.display = isActive ? 'block' : 'none';
+                    page.classList.toggle('active-page', isActive);
+                });
+
+                window.scrollTo(0, 0);
+
+                // Persist current page in URL hash so refresh keeps position
+                const activePage = pages[currentPageIndex];
+                const pageId = activePage && activePage.getAttribute('data-page-id');
+                if (pageId) {
+                    const newHash = '#' + pageId;
+                    if (location.hash !== newHash) {
+                        history.replaceState(null, '', newHash);
+                    }
+                }
+
+                // Let side-nav recompute active section for the new page
+                window.dispatchEvent(new Event('scroll'));
+            }
+
+            function goToPage(index) {
+                if (index < 0 || index >= totalPages) return;
+                currentPageIndex = index;
+                updateNavigation();
+            }
+
+            prevButton.addEventListener('click', function() {
+                if (currentPageIndex > 0) {
+                    goToPage(currentPageIndex - 1);
+                }
+            });
+
+            nextButton.addEventListener('click', function() {
+                if (currentPageIndex < totalPages - 1) {
+                    goToPage(currentPageIndex + 1);
+                }
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+                    event.preventDefault();
+                    goToPage(currentPageIndex + 1);
+                } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+                    event.preventDefault();
+                    goToPage(currentPageIndex - 1);
+                }
+            });
+
+            // Helper to find which page contains a given element ID or matches a page ID
+            function findPageIndexForTargetId(targetId) {
+                for (let i = 0; i < pages.length; i++) {
+                    const page = pages[i];
+                    if (page.getAttribute('data-page-id') === targetId ||
+                        page.querySelector('#' + CSS.escape(targetId)) ||
+                        page.querySelector('.fragment[id=\"' + CSS.escape(targetId) + '\"]')) {
+                        return i;
+                    }
+                }
+                return -1;
+            }
+
+            // Intercept TOC and side-nav clicks to switch pages before scrolling
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('.side-nav-chevron')) return;
+                const link = event.target.closest('a[href^=\"#\"]');
+                if (!link) return;
+
+                const href = link.getAttribute('href');
+                if (!href || href === '#' || href === '#top') return;
+
+                const targetId = href.slice(1);
+                const targetPageIndex = findPageIndexForTargetId(targetId);
+                if (targetPageIndex >= 0) {
+                    // If the target is on the current page, let the standard in-page
+                    // smooth scroll logic handle it so we don't jump to the top first.
+                    if (targetPageIndex === currentPageIndex) {
+                        return;
+                    }
+
+                    event.preventDefault();
+                    goToPage(targetPageIndex);
+
+                    // After page switch, scroll to the target heading/fragment
+                    const targetEl = document.getElementById(targetId);
+                    if (targetEl) {
+                        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            }, true);
+
+            // Restore position from URL hash on load (so refresh keeps your place)
+            function restoreFromHash() {
+                const hash = location.hash.slice(1);
+                if (!hash) return;
+
+                let targetPageIndex = -1;
+                const pageById = pages.find(p => p.getAttribute('data-page-id') === hash);
+                if (pageById) {
+                    targetPageIndex = parseInt(pageById.getAttribute('data-page-index'), 10);
+                } else {
+                    targetPageIndex = findPageIndexForTargetId(hash);
+                }
+                if (targetPageIndex >= 0) {
+                    currentPageIndex = targetPageIndex;
+                    updateNavigation();
+                    var targetEl = document.getElementById(hash);
+                    if (targetEl) {
+                        targetEl.scrollIntoView({ behavior: 'auto', block: 'start' });
+                    }
+                }
+            }
+
+            // Initialize: restore from hash first, then default to page 0
+            restoreFromHash();
+            if (currentPageIndex === 0 && !location.hash) {
+                updateNavigation();
+            }
+        })();
+    </script>
+</body>
+</html>
+

@@ -137,6 +137,16 @@ def view_version_3a():
     pages = build_item_pages(fragments)
     return render_template('version3a.html', fragments=fragments, pages=pages)
 
+
+@app.route('/version/3b')
+def view_version_3b():
+    """Display Version 3B (same as 3A plus Quick Access shortcuts in the side nav)"""
+    fragments = load_fragments()
+    if not fragments:
+        return "Version 3B requires fragments. Please set up fragments first.", 404
+    pages = build_item_pages(fragments)
+    return render_template('version3b.html', fragments=fragments, pages=pages)
+
 if __name__ == '__main__':
     print("=" * 60)
     print("Illinois Tool Works 10-K Document Viewer")

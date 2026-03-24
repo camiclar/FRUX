@@ -1,8 +1,6 @@
 /**
- * Side Navigation for 10-K Document - Version 3A
- * Based on Version 2 side nav, but with:
- * - Custom Part labels in the nav
- * - Breadcrumbs at the top of the page that update with scroll
+ * Side Navigation for 10-K Document - Version 3B
+ * Same as Version 3A, plus a Quick Access block above the main nav links.
  */
 
 (function() {
@@ -92,6 +90,47 @@
                 sep.textContent = ' / ';
                 crumbsContainer.appendChild(sep);
             }
+        });
+    }
+
+    function findFirstItemHeadingId(wantKey) {
+        const want = String(wantKey).toUpperCase();
+        const heads = document.querySelectorAll('main h3.item-heading');
+        for (let i = 0; i < heads.length; i++) {
+            const num = heads[i].querySelector('.item-number');
+            if (!num) continue;
+            const raw = num.textContent.replace(/\s+/g, ' ').trim().toUpperCase();
+            const m = raw.match(/^ITEM\s*([\d]+[ABCD]?)\.?/);
+            if (!m) continue;
+            if (m[1] === want) {
+                ensureHeadingId(heads[i]);
+                return heads[i].id;
+            }
+        }
+        return null;
+    }
+
+    function buildQuickAccess() {
+        const list = document.getElementById('quick-access-list');
+        if (!list) return;
+        list.innerHTML = '';
+        const entries = [
+            { key: '1', label: 'ITEM 1. Business' },
+            { key: '1A', label: 'ITEM 1A. Risk Factors' },
+            { key: '7', label: 'ITEM 7. MD&A' },
+            { key: '8', label: 'ITEM 8. Financial Statements' }
+        ];
+        entries.forEach(function(entry) {
+            const id = findFirstItemHeadingId(entry.key);
+            if (!id) return;
+            const li = document.createElement('li');
+            li.className = 'quick-access-item';
+            const a = document.createElement('a');
+            a.className = 'quick-access-link';
+            a.href = '#' + id;
+            a.textContent = entry.label;
+            li.appendChild(a);
+            list.appendChild(li);
         });
     }
 
@@ -383,6 +422,35 @@
         if (!navList) return;
 
         buildNavigation();
+        buildQuickAccess();
+
+        const qaToggle = document.getElementById('quick-access-toggle');
+        const qaBlock = document.getElementById('quick-access');
+        if (qaToggle && qaBlock) {
+            qaToggle.addEventListener('click', function() {
+                const collapsed = qaBlock.classList.toggle('quick-access-collapsed');
+                qaToggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+            });
+        }
+
+        // Same-page smooth scroll for Quick Access links (pagination script handles cross-page)
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a.quick-access-link');
+            if (!link) return;
+            const href = link.getAttribute('href');
+            if (!href || href.charAt(0) !== '#') return;
+            const id = href.slice(1);
+            const el = document.getElementById(id);
+            if (!el) return;
+            const ap = document.querySelector('.pagination-page.active-page');
+            if (ap && ap.contains(el)) {
+                e.preventDefault();
+                e.stopPropagation();
+                const top = el.getBoundingClientRect().top + window.scrollY - 80;
+                window.scrollTo({ top: top, behavior: 'smooth' });
+                setTimeout(updateActiveState, 100);
+            }
+        }, true);
 
         // Start with all H2 and H3 collapsed; updateActiveState will expand only the current section's branch
         document.querySelectorAll('.side-nav-item.h2-item, .side-nav-item.h3-item').forEach(function(item) {
