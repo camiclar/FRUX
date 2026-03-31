@@ -30,8 +30,8 @@ This document summarizes how each **version** of the Illinois Tool Works Form 10
 
 - **Base:** Everything in **Version 2** (same pagination rules, same side nav behavior, same main-column and font choices unless overridden).
 - **Part labels (side nav only):** Part rows in the nav use long labels, e.g.  
-  `PART I: Business & Risks`, `PART II: Financial Performance`, `PART III: Governance & Compensation`, `PART IV: Legal Exhibits`.  
-  **In-document** `h2` text is unchanged.
+`PART I: Business & Risks`, `PART II: Financial Performance`, `PART III: Governance & Compensation`, `PART IV: Legal Exhibits`.  
+**In-document** `h2` text is unchanged.
 - **Breadcrumbs:** A **sticky** bar at the top of the main column shows location as `10-K / …` with **slash** separators. Segments are **links** where applicable (e.g. root to title page, part/item/section to anchors). Title page and table of contents get dedicated crumb lines (`10-K / Title Page`, `10-K / Table of Contents`).
 - **Breadcrumbs logic:** Part is inferred from the **item** when the current pagination page does not include the Part `h2` (e.g. Item 6). Stale crumbs on title/TOC are avoided by always refreshing when the active page changes.
 
@@ -51,23 +51,28 @@ This document summarizes how each **version** of the Illinois Tool Works Form 10
 
 ## Quick reference
 
-| Feature | v1 | v2 | 3A | 3B |
-|--------|----|----|----|-----|
-| SEC-style page numbers in view | Yes | Hidden | Hidden | Hidden |
-| Side nav | No | Yes | Yes | Yes + Quick Access |
-| Item pagination | No | Yes | Yes | Yes |
-| Custom Part labels in nav | — | No | Yes | Yes |
-| Sticky breadcrumbs | — | No | Yes | Yes |
-| Quick Access shortcuts | — | No | No | Yes |
+
+| Feature                        | v1  | v2     | 3A     | 3B                 |
+| ------------------------------ | --- | ------ | ------ | ------------------ |
+| SEC-style page numbers in view | Yes | Hidden | Hidden | Hidden             |
+| Side nav                       | No  | Yes    | Yes    | Yes + Quick Access |
+| Item pagination                | No  | Yes    | Yes    | Yes                |
+| Custom Part labels in nav      | —   | No     | Yes    | Yes                |
+| Sticky breadcrumbs             | —   | No     | Yes    | Yes                |
+| Quick Access shortcuts         | —   | No     | No     | Yes                |
+
 
 ---
 
 ## Routes (Flask)
 
-| Route | Template |
-|-------|----------|
-| `/` | `menu.html` |
-| `/version/1` | `version1.html` |
-| `/version/2` | `version2.html` |
+
+| Route         | Template         |
+| ------------- | ---------------- |
+| `/`           | `menu.html`      |
+| `/version/1`  | `version1.html`  |
+| `/version/2`  | `version2.html`  |
 | `/version/3a` | `version3a.html` |
 | `/version/3b` | `version3b.html` |
+
+

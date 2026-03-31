@@ -36,10 +36,11 @@
         const main = document.querySelector('main');
         if (!main) return;
 
-        const headings = main.querySelectorAll('h2.part-heading, h3.item-heading, h4.section-heading');
+        const headings = main.querySelectorAll('h2.part-heading, h3.item-heading, h4.section-heading, h5');
         const navStructure = [];
         let currentH2 = null;
         let currentH3 = null;
+        let currentH4 = null;
 
         headings.forEach((heading) => {
             if (heading.tagName === 'H2' && heading.classList.contains('sr-only')) return;
@@ -55,6 +56,7 @@
                     children: []
                 };
                 currentH3 = null;
+                currentH4 = null;
                 navStructure.push(currentH2);
             } else if (heading.tagName === 'H3' && heading.classList.contains('item-heading') && currentH2) {
                 currentH3 = {
@@ -63,12 +65,21 @@
                     text,
                     children: []
                 };
+                currentH4 = null;
                 currentH2.children.push(currentH3);
             } else if (heading.tagName === 'H4' && heading.classList.contains('section-heading') && currentH3) {
-                currentH3.children.push({
+                currentH4 = {
                     element: heading,
-                    id: ensureHeadingId(heading),
-                    text: heading.textContent.trim()
+                    id,
+                    text,
+                    children: []
+                };
+                currentH3.children.push(currentH4);
+            } else if (heading.tagName === 'H5' && currentH4) {
+                currentH4.children.push({
+                    element: heading,
+                    id,
+                    text
                 });
             }
         });
@@ -96,7 +107,7 @@
                 const submenu = document.createElement('ul');
                 submenu.className = 'side-nav-submenu';
                 item.children.forEach(child => {
-                    const childLevel = level === 'h2' ? 'h3' : 'h4';
+                    const childLevel = level === 'h2' ? 'h3' : (level === 'h3' ? 'h4' : 'h5');
                     submenu.appendChild(buildNavItem(child, childLevel));
                 });
                 li.appendChild(link);
@@ -134,7 +145,7 @@
         }
         if (!container) return null;
 
-        const headings = container.querySelectorAll('h2.part-heading[id], h3.item-heading[id], h4.section-heading[id]');
+        const headings = container.querySelectorAll('h2.part-heading[id], h3.item-heading[id], h4.section-heading[id], h5[id]');
         let currentSection = null;
         const scrollPosition = window.scrollY + 100;
 
@@ -150,13 +161,17 @@
     }
 
     function expandParents(link) {
+        const h5Item = link.closest('.h5-item');
         const h4Item = link.closest('.h4-item');
         const h3Item = link.closest('.h3-item');
         const h2Item = link.closest('.h2-item');
-        if (h4Item && h3Item) {
+        if (h5Item && h4Item) {
+            h4Item.classList.add('expanded');
+        }
+        if ((h4Item || h5Item) && h3Item) {
             h3Item.classList.add('expanded');
         }
-        if ((h3Item || h4Item) && h2Item) {
+        if ((h3Item || h4Item || h5Item) && h2Item) {
             h2Item.classList.add('expanded');
         }
     }
@@ -181,7 +196,7 @@
     }
 
     function collapseInactiveSections(currentSection) {
-        const expandedItems = document.querySelectorAll('.side-nav-item.h2-item.expanded, .side-nav-item.h3-item.expanded');
+        const expandedItems = document.querySelectorAll('.side-nav-item.h2-item.expanded, .side-nav-item.h3-item.expanded, .side-nav-item.h4-item.expanded');
 
         expandedItems.forEach(item => {
             if (item.getAttribute('data-manual-toggle') === 'true') return;
@@ -216,7 +231,7 @@
         if (!chevron) return;
         e.preventDefault();
         e.stopPropagation();
-        const item = chevron.closest('.h2-item, .h3-item');
+        const item = chevron.closest('.h2-item, .h3-item, .h4-item');
         if (item) {
             item.classList.toggle('expanded');
             item.setAttribute('data-manual-toggle', 'true');
@@ -232,7 +247,7 @@
         buildNavigation();
 
         // Start with all H2 and H3 collapsed; updateActiveState will expand only the current section's branch
-        document.querySelectorAll('.side-nav-item.h2-item, .side-nav-item.h3-item').forEach(function(item) {
+        document.querySelectorAll('.side-nav-item.h2-item, .side-nav-item.h3-item, .side-nav-item.h4-item').forEach(function(item) {
             item.classList.remove('expanded');
         });
         updateActiveState();
