@@ -1,8 +1,7 @@
 /**
- * Side Navigation for 10-K Document - Version 3A
- * Based on Version 2 side nav, but with:
- * - Custom Part labels in the nav
- * - Breadcrumbs at the top of the page that update with scroll
+ * Side Navigation for 10-K Document
+ * Creates a dynamic side navigation from H2 (Parts), H3 (Items), and H4 (Sections)
+ * with scroll-based active state updates and expandable sections
  */
 
 (function() {
@@ -27,74 +26,6 @@
         return heading.id;
     }
 
-    // Map Part headings to custom labels for Version 3A side nav
-    function getPartNavLabel(rawText) {
-        const norm = rawText.replace(/\s+/g, ' ').trim().toUpperCase();
-        // Check longer roman numerals first: "PART II/III/IV" all start with the substring "PART I"
-        if (norm.startsWith('PART IV')) {
-            return 'PART IV: Legal Exhibits';
-        }
-        if (norm.startsWith('PART III')) {
-            return 'PART III: Governance & Compensation';
-        }
-        if (norm.startsWith('PART II')) {
-            return 'PART II: Financial Performance';
-        }
-        if (norm.startsWith('PART I')) {
-            return 'PART I: Business & Risks';
-        }
-        return rawText.trim();
-    }
-
-    /** Item keys (digits + optional A/B/C) → Roman part for SEC 10-K layout */
-    function partRomanForItemKey(key) {
-        const k = String(key).toUpperCase().replace(/\.$/, '');
-        if (['1', '1A', '1B', '1C', '2', '3', '4'].indexOf(k) !== -1) return 'PART I';
-        if (['5', '6', '7', '7A', '8', '9'].indexOf(k) !== -1) return 'PART II';
-        if (['10', '11', '12', '13', '14'].indexOf(k) !== -1) return 'PART III';
-        if (['15', '16'].indexOf(k) !== -1) return 'PART IV';
-        return null;
-    }
-
-    function findPartHeadingElement(partRoman) {
-        const want = partRoman.replace(/\s+/g, ' ').trim().toUpperCase();
-        const all = document.querySelectorAll('h2.part-heading');
-        for (let i = 0; i < all.length; i++) {
-            const t = all[i].textContent.replace(/\s+/g, ' ').trim().toUpperCase();
-            if (want === 'PART IV' && t.startsWith('PART IV')) return all[i];
-            if (want === 'PART III' && t.startsWith('PART III')) return all[i];
-            if (want === 'PART II' && t.startsWith('PART II')) return all[i];
-            if (want === 'PART I' && t.startsWith('PART I') && !t.startsWith('PART II')) return all[i];
-        }
-        return null;
-    }
-
-    function parseItemKeyFromHeading(itemHeading) {
-        if (!itemHeading) return null;
-        const numSpan = itemHeading.querySelector('.item-number');
-        const raw = (numSpan ? numSpan.textContent : itemHeading.textContent) || '';
-        const m = raw.match(/ITEM\s*([\d]+[ABCD]?)\.?/i);
-        return m ? m[1].toUpperCase() : null;
-    }
-
-    function renderCrumbs(crumbsContainer, crumbs, links) {
-        crumbsContainer.innerHTML = '';
-        crumbs.forEach(function(label, idx) {
-            const linkHref = links[idx] || null;
-            const el = document.createElement(linkHref ? 'a' : 'span');
-            el.className = 'breadcrumb-segment';
-            if (linkHref) el.href = linkHref;
-            el.textContent = label;
-            crumbsContainer.appendChild(el);
-            if (idx < crumbs.length - 1) {
-                const sep = document.createElement('span');
-                sep.className = 'breadcrumb-separator';
-                sep.textContent = ' / ';
-                crumbsContainer.appendChild(sep);
-            }
-        });
-    }
-
     // Build the navigation structure
     function buildNavigation() {
         const navList = document.getElementById('side-nav-list');
@@ -115,10 +46,9 @@
             if (heading.tagName === 'H2' && heading.classList.contains('sr-only')) return;
 
             const id = ensureHeadingId(heading);
-            let text = heading.textContent.trim();
+            const text = heading.textContent.trim();
 
             if (heading.tagName === 'H2' && heading.classList.contains('part-heading')) {
-                text = getPartNavLabel(text);
                 currentH2 = {
                     element: heading,
                     id,
@@ -188,7 +118,7 @@
             return li;
         }
 
-        // Special top-level entries for Title Page and Table of Contents (Version 3A)
+        // Special top-level entries for Title Page and Table of Contents (Version 2)
         const specials = [];
         if (document.querySelector('.pagination-page[data-page-id="title_page"]')) {
             specials.push({ id: 'title_page', text: 'Title Page', children: [] });
@@ -207,7 +137,7 @@
     }
 
     function getCurrentSection() {
-        // Prefer headings within the active pagination page
+        // Prefer headings within the active pagination page (Version 2)
         let container = document.querySelector('.pagination-page.active-page');
         if (!container) {
             // Fallback: use main if no active page marker is present
@@ -246,102 +176,19 @@
         }
     }
 
-    function updateBreadcrumbs() {
-        const crumbsContainer = document.getElementById('breadcrumbs');
-        if (!crumbsContainer) return;
-
-        const activePage = document.querySelector('.pagination-page.active-page');
-        if (!activePage) return;
-
-        const pageId = activePage.getAttribute('data-page-id') || '';
-
-        if (pageId === 'title_page') {
-            renderCrumbs(crumbsContainer,
-                ['10-K', 'Title Page'],
-                ['#title_page', '#title_page']);
-            return;
-        }
-        if (pageId === 'table_of_contents') {
-            renderCrumbs(crumbsContainer,
-                ['10-K', 'Table of Contents'],
-                ['#title_page', '#table_of_contents']);
-            return;
-        }
-
-        const activeLink = document.querySelector('.side-nav-link.active');
-        let currentSectionId = null;
-        if (activeLink) {
-            const href = activeLink.getAttribute('href') || '';
-            if (href.startsWith('#')) {
-                currentSectionId = href.slice(1);
-            }
-        }
-
-        const crumbs = [];
-        const links = [];
-
-        crumbs.push('10-K');
-        links.push('#title_page');
-
-        const itemHeading = activePage.querySelector('h3.item-heading');
-        let partHeading = activePage.querySelector('h2.part-heading');
-        if (!partHeading && itemHeading) {
-            const itemKey = parseItemKeyFromHeading(itemHeading);
-            const partRoman = itemKey ? partRomanForItemKey(itemKey) : null;
-            if (partRoman) partHeading = findPartHeadingElement(partRoman);
-        }
-        if (partHeading && partHeading.id) {
-            crumbs.push(partHeading.textContent.trim());
-            links.push('#' + partHeading.id);
-        }
-
-        if (itemHeading) {
-            const numSpan = itemHeading.querySelector('.item-number');
-            let itemLabel = numSpan ? numSpan.textContent.trim() : itemHeading.textContent.trim();
-            itemLabel = itemLabel.replace(/^ITEM\s+/i, 'Item ').replace(/\.$/, '');
-            crumbs.push(itemLabel);
-            links.push('#' + itemHeading.id);
-        }
-
-        if (currentSectionId) {
-            const sectionEl = document.getElementById(currentSectionId);
-            if (sectionEl && activePage.contains(sectionEl) &&
-                sectionEl.matches('h4.section-heading, h5, h6.section-heading')) {
-                crumbs.push(sectionEl.textContent.trim());
-                links.push('#' + sectionEl.id);
-            }
-        }
-
-        renderCrumbs(crumbsContainer, crumbs, links);
-    }
-
     function updateActiveState() {
         const currentSection = getCurrentSection();
+        if (!currentSection) return;
 
-        document.querySelectorAll('.side-nav-link').forEach(function(link) {
-            link.classList.remove('active');
-        });
+        document.querySelectorAll('.side-nav-link').forEach(link => link.classList.remove('active'));
 
-        if (currentSection) {
-            const activeLink = document.querySelector('.side-nav-link[href="#' + currentSection + '"]');
-            if (activeLink) {
-                activeLink.classList.add('active');
-                expandParents(activeLink);
-            }
-            collapseInactiveSections(currentSection);
-        } else {
-            const page = document.querySelector('.pagination-page.active-page');
-            const pid = page && page.getAttribute('data-page-id');
-            if (pid === 'title_page') {
-                const l = document.querySelector('.side-nav-link[href="#title_page"]');
-                if (l) l.classList.add('active');
-            } else if (pid === 'table_of_contents') {
-                const l = document.querySelector('.side-nav-link[href="#table_of_contents"]');
-                if (l) l.classList.add('active');
-            }
+        const activeLink = document.querySelector(`.side-nav-link[href="#${currentSection}"]`);
+        if (activeLink) {
+            activeLink.classList.add('active');
+            expandParents(activeLink);
         }
 
-        updateBreadcrumbs();
+        collapseInactiveSections(currentSection);
     }
 
     function expandSection(item) {
@@ -393,10 +240,78 @@
         return false;
     }
 
+    // Wrap each H4 section and its following content into a card for scannability.
+    function applyScannableGrouping() {
+        const pages = document.querySelectorAll('.pagination-page');
+        pages.forEach(page => {
+            let carryFromPreviousFragment = false;
+            let openCard = null;
+            const fragments = page.querySelectorAll(':scope .fragment');
+
+            fragments.forEach(fragment => {
+                const firstTopHeading = fragment.querySelector(':scope > h2.part-heading, :scope > h3.item-heading, :scope > h4.section-heading, :scope > h5');
+
+                if (fragment.getAttribute('data-h4-grouped') === 'true') {
+                    // keep carry signal in sync when rerun
+                    if (firstTopHeading && (firstTopHeading.tagName === 'H2' || firstTopHeading.tagName === 'H3' || firstTopHeading.tagName === 'H4')) {
+                        carryFromPreviousFragment = false;
+                        openCard = null;
+                    } else {
+                        carryFromPreviousFragment = carryFromPreviousFragment || !!openCard;
+                    }
+                    return;
+                }
+                fragment.setAttribute('data-h4-grouped', 'true');
+
+                if (firstTopHeading && (firstTopHeading.tagName === 'H2' || firstTopHeading.tagName === 'H3')) {
+                    carryFromPreviousFragment = false;
+                    openCard = null;
+                }
+
+                // If this fragment continues a prior H4 card, move leading content into the open card
+                // until we reach the next section boundary (H2/H3/H4).
+                if (carryFromPreviousFragment && openCard && (!firstTopHeading || firstTopHeading.tagName === 'H5')) {
+                    while (fragment.firstElementChild &&
+                        !fragment.firstElementChild.matches('h2.part-heading, h3.item-heading, h4.section-heading')) {
+                        openCard.appendChild(fragment.firstElementChild);
+                    }
+                }
+
+                const h4s = fragment.querySelectorAll(':scope > h4.section-heading');
+                if (h4s.length > 0) {
+                    h4s.forEach(h4 => {
+                        if (h4.parentElement && h4.parentElement.classList.contains('h4-content-card')) return;
+
+                        const card = document.createElement('section');
+                        card.className = 'h4-content-card';
+                        h4.parentNode.insertBefore(card, h4);
+
+                        let node = h4;
+                        while (node) {
+                            const next = node.nextElementSibling;
+                            if (node !== h4 && node.matches('h2.part-heading, h3.item-heading, h4.section-heading')) {
+                                break;
+                            }
+                            card.appendChild(node);
+                            node = next;
+                        }
+                        openCard = card;
+                    });
+                    carryFromPreviousFragment = true;
+                } else if (carryFromPreviousFragment && openCard && fragment.childElementCount === 0) {
+                    fragment.remove();
+                } else {
+                    openCard = null;
+                }
+            });
+        });
+    }
+
     function init() {
         const navList = document.getElementById('side-nav-list');
         if (!navList) return;
 
+        applyScannableGrouping();
         buildNavigation();
 
         // Start with all H2 and H3 collapsed; updateActiveState will expand only the current section's branch
@@ -456,3 +371,148 @@
     }
 })();
 
+// Version 3A add-ons: nav part labels + sticky breadcrumbs
+(function() {
+    'use strict';
+
+    function labelForPart(text) {
+        const norm = (text || '').replace(/\s+/g, ' ').trim().toUpperCase();
+        if (norm.startsWith('PART IV')) return 'PART IV: Legal Exhibits';
+        if (norm.startsWith('PART III')) return 'PART III: Governance & Compensation';
+        if (norm.startsWith('PART II')) return 'PART II: Financial Performance';
+        if (norm.startsWith('PART I')) return 'PART I: Business & Risks';
+        return text;
+    }
+
+    function partRomanForItemKey(key) {
+        const k = String(key).toUpperCase().replace(/\.$/, '');
+        if (['1', '1A', '1B', '1C', '2', '3', '4'].indexOf(k) !== -1) return 'PART I';
+        if (['5', '6', '7', '7A', '8', '9'].indexOf(k) !== -1) return 'PART II';
+        if (['10', '11', '12', '13', '14'].indexOf(k) !== -1) return 'PART III';
+        if (['15', '16'].indexOf(k) !== -1) return 'PART IV';
+        return null;
+    }
+
+    function findPartHeadingElement(partRoman) {
+        const want = partRoman.replace(/\s+/g, ' ').trim().toUpperCase();
+        const all = document.querySelectorAll('h2.part-heading');
+        for (let i = 0; i < all.length; i++) {
+            const t = all[i].textContent.replace(/\s+/g, ' ').trim().toUpperCase();
+            if (want === 'PART IV' && t.startsWith('PART IV')) return all[i];
+            if (want === 'PART III' && t.startsWith('PART III')) return all[i];
+            if (want === 'PART II' && t.startsWith('PART II')) return all[i];
+            if (want === 'PART I' && t.startsWith('PART I') && !t.startsWith('PART II')) return all[i];
+        }
+        return null;
+    }
+
+    function parseItemKeyFromHeading(itemHeading) {
+        if (!itemHeading) return null;
+        const numSpan = itemHeading.querySelector('.item-number');
+        const raw = (numSpan ? numSpan.textContent : itemHeading.textContent) || '';
+        const m = raw.match(/ITEM\s*([\d]+[ABCD]?)\.?/i);
+        return m ? m[1].toUpperCase() : null;
+    }
+
+    function renderCrumbs(crumbsContainer, crumbs, links) {
+        crumbsContainer.innerHTML = '';
+        crumbs.forEach(function(label, idx) {
+            const href = links[idx] || null;
+            const el = document.createElement(href ? 'a' : 'span');
+            el.className = 'breadcrumb-segment';
+            if (href) el.href = href;
+            el.textContent = label;
+            crumbsContainer.appendChild(el);
+            if (idx < crumbs.length - 1) {
+                const sep = document.createElement('span');
+                sep.className = 'breadcrumb-separator';
+                sep.textContent = ' / ';
+                crumbsContainer.appendChild(sep);
+            }
+        });
+    }
+
+    function updatePartLabelsInNav() {
+        document.querySelectorAll('#side-nav-list .side-nav-item.h2-item > .side-nav-link > span').forEach(function(span) {
+            const text = span.textContent.trim();
+            if (/^PART\s+[IVX]+/i.test(text)) {
+                span.textContent = labelForPart(text);
+            }
+        });
+    }
+
+    function updateBreadcrumbs() {
+        const crumbsContainer = document.getElementById('breadcrumbs');
+        if (!crumbsContainer) return;
+
+        const activePage = document.querySelector('.pagination-page.active-page');
+        if (!activePage) return;
+
+        const pageId = activePage.getAttribute('data-page-id') || '';
+        if (pageId === 'title_page') {
+            renderCrumbs(crumbsContainer, ['10-K', 'Title Page'], ['#title_page', '#title_page']);
+            return;
+        }
+        if (pageId === 'table_of_contents') {
+            renderCrumbs(crumbsContainer, ['10-K', 'Table of Contents'], ['#title_page', '#table_of_contents']);
+            return;
+        }
+
+        const crumbs = ['10-K'];
+        const links = ['#title_page'];
+        const itemHeading = activePage.querySelector('h3.item-heading');
+        let partHeading = activePage.querySelector('h2.part-heading');
+
+        if (!partHeading && itemHeading) {
+            const itemKey = parseItemKeyFromHeading(itemHeading);
+            const partRoman = itemKey ? partRomanForItemKey(itemKey) : null;
+            if (partRoman) partHeading = findPartHeadingElement(partRoman);
+        }
+        if (partHeading && partHeading.id) {
+            crumbs.push(partHeading.textContent.trim());
+            links.push('#' + partHeading.id);
+        }
+
+        if (itemHeading) {
+            const numSpan = itemHeading.querySelector('.item-number');
+            let itemLabel = numSpan ? numSpan.textContent.trim() : itemHeading.textContent.trim();
+            itemLabel = itemLabel.replace(/^ITEM\s+/i, 'Item ').replace(/\.$/, '');
+            crumbs.push(itemLabel);
+            links.push('#' + itemHeading.id);
+        }
+
+        const activeLink = document.querySelector('.side-nav-link.active');
+        let currentSectionId = null;
+        if (activeLink) {
+            const href = activeLink.getAttribute('href') || '';
+            if (href.startsWith('#')) currentSectionId = href.slice(1);
+        }
+        if (currentSectionId) {
+            const sectionEl = document.getElementById(currentSectionId);
+            if (sectionEl && activePage.contains(sectionEl) && sectionEl.matches('h4.section-heading, h5, h6.section-heading')) {
+                crumbs.push(sectionEl.textContent.trim());
+                links.push('#' + sectionEl.id);
+            }
+        }
+
+        renderCrumbs(crumbsContainer, crumbs, links);
+    }
+
+    function initV3AAddons() {
+        updatePartLabelsInNav();
+        updateBreadcrumbs();
+        window.addEventListener('scroll', updateBreadcrumbs);
+        document.addEventListener('click', function() {
+            setTimeout(function() {
+                updatePartLabelsInNav();
+                updateBreadcrumbs();
+            }, 0);
+        }, true);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initV3AAddons);
+    } else {
+        initV3AAddons();
+    }
+})();

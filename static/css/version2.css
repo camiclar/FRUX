@@ -33,6 +33,7 @@ body {
     display: flex;
     gap: 2rem;
     max-width: 100%;
+    background-color: #efefef;
 }
 
 .side-nav {
@@ -153,7 +154,7 @@ body {
     border-left: 3px solid transparent;
     gap: 0.5rem;
     position: relative; /* allow absolutely positioned chevron */
-    padding-right: 1.5rem; /* space for chevron on the right */
+    padding-right: 1.5rem; /* reserve space so long labels never overlap chevrons */
 }
 
 .side-nav-link > span {
@@ -176,7 +177,10 @@ body {
 .side-nav-item.h2-item .side-nav-link {
     font-weight: 700;
     font-size: 10pt;
-    padding: 0.75rem;
+    padding-top: 0.75rem;
+    padding-right: 3rem;
+    padding-bottom: 0.75rem;
+    padding-left: 0.75rem;
 }
 
 .side-nav-item.h3-item .side-nav-link {
@@ -259,6 +263,26 @@ main {
     max-width: 1000px;
     margin: 0 auto;
     width: 100%;
+    /* background-color: #d9d9d9; */
+    padding: 0.75rem;
+}
+
+/* Scannable section cards: each H4 block sits on white */
+.h4-content-card {
+    background-color: #ffffff;
+    padding: 0.75rem 0.9rem;
+    margin: 0 0 0.75rem 0;
+}
+
+/* Continuation fragment when an H4 block spans multiple fragments */
+.fragment.h4-content-card-fragment {
+    background-color: #ffffff;
+    padding: 0.75rem 0.9rem;
+    margin: 0 0 0.75rem 0;
+}
+
+.h4-content-card > h4.section-heading {
+    margin-top: 0;
 }
 
 /* Mobile and tablet styles */

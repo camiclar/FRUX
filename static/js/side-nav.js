@@ -240,10 +240,78 @@
         return false;
     }
 
+    // Wrap each H4 section and its following content into a card for scannability.
+    function applyScannableGrouping() {
+        const pages = document.querySelectorAll('.pagination-page');
+        pages.forEach(page => {
+            let carryFromPreviousFragment = false;
+            let openCard = null;
+            const fragments = page.querySelectorAll(':scope .fragment');
+
+            fragments.forEach(fragment => {
+                const firstTopHeading = fragment.querySelector(':scope > h2.part-heading, :scope > h3.item-heading, :scope > h4.section-heading, :scope > h5');
+
+                if (fragment.getAttribute('data-h4-grouped') === 'true') {
+                    // keep carry signal in sync when rerun
+                    if (firstTopHeading && (firstTopHeading.tagName === 'H2' || firstTopHeading.tagName === 'H3' || firstTopHeading.tagName === 'H4')) {
+                        carryFromPreviousFragment = false;
+                        openCard = null;
+                    } else {
+                        carryFromPreviousFragment = carryFromPreviousFragment || !!openCard;
+                    }
+                    return;
+                }
+                fragment.setAttribute('data-h4-grouped', 'true');
+
+                if (firstTopHeading && (firstTopHeading.tagName === 'H2' || firstTopHeading.tagName === 'H3')) {
+                    carryFromPreviousFragment = false;
+                    openCard = null;
+                }
+
+                // If this fragment continues a prior H4 card, move leading content into the open card
+                // until we reach the next section boundary (H2/H3/H4).
+                if (carryFromPreviousFragment && openCard && (!firstTopHeading || firstTopHeading.tagName === 'H5')) {
+                    while (fragment.firstElementChild &&
+                        !fragment.firstElementChild.matches('h2.part-heading, h3.item-heading, h4.section-heading')) {
+                        openCard.appendChild(fragment.firstElementChild);
+                    }
+                }
+
+                const h4s = fragment.querySelectorAll(':scope > h4.section-heading');
+                if (h4s.length > 0) {
+                    h4s.forEach(h4 => {
+                        if (h4.parentElement && h4.parentElement.classList.contains('h4-content-card')) return;
+
+                        const card = document.createElement('section');
+                        card.className = 'h4-content-card';
+                        h4.parentNode.insertBefore(card, h4);
+
+                        let node = h4;
+                        while (node) {
+                            const next = node.nextElementSibling;
+                            if (node !== h4 && node.matches('h2.part-heading, h3.item-heading, h4.section-heading')) {
+                                break;
+                            }
+                            card.appendChild(node);
+                            node = next;
+                        }
+                        openCard = card;
+                    });
+                    carryFromPreviousFragment = true;
+                } else if (carryFromPreviousFragment && openCard && fragment.childElementCount === 0) {
+                    fragment.remove();
+                } else {
+                    openCard = null;
+                }
+            });
+        });
+    }
+
     function init() {
         const navList = document.getElementById('side-nav-list');
         if (!navList) return;
 
+        applyScannableGrouping();
         buildNavigation();
 
         // Start with all H2 and H3 collapsed; updateActiveState will expand only the current section's branch
