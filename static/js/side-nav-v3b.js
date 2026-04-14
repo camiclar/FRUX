@@ -384,6 +384,111 @@
         return text;
     }
 
+    function partRomanForItemKey(key) {
+        const k = String(key).toUpperCase().replace(/\.$/, '');
+        if (['1', '1A', '1B', '1C', '2', '3', '4'].indexOf(k) !== -1) return 'PART I';
+        if (['5', '6', '7', '7A', '8', '9'].indexOf(k) !== -1) return 'PART II';
+        if (['10', '11', '12', '13', '14'].indexOf(k) !== -1) return 'PART III';
+        if (['15', '16'].indexOf(k) !== -1) return 'PART IV';
+        return null;
+    }
+
+    function findPartHeadingElement(partRoman) {
+        const want = partRoman.replace(/\s+/g, ' ').trim().toUpperCase();
+        const all = document.querySelectorAll('h2.part-heading');
+        for (let i = 0; i < all.length; i++) {
+            const t = all[i].textContent.replace(/\s+/g, ' ').trim().toUpperCase();
+            if (want === 'PART IV' && t.startsWith('PART IV')) return all[i];
+            if (want === 'PART III' && t.startsWith('PART III')) return all[i];
+            if (want === 'PART II' && t.startsWith('PART II')) return all[i];
+            if (want === 'PART I' && t.startsWith('PART I') && !t.startsWith('PART II')) return all[i];
+        }
+        return null;
+    }
+
+    function parseItemKeyFromHeading(itemHeading) {
+        if (!itemHeading) return null;
+        const numSpan = itemHeading.querySelector('.item-number');
+        const raw = (numSpan ? numSpan.textContent : itemHeading.textContent) || '';
+        const m = raw.match(/ITEM\s*([\d]+[ABCD]?)\.?/i);
+        return m ? m[1].toUpperCase() : null;
+    }
+
+    function renderCrumbs(crumbsContainer, crumbs, links) {
+        crumbsContainer.innerHTML = '';
+        crumbs.forEach(function(label, idx) {
+            const href = links[idx] || null;
+            const el = document.createElement(href ? 'a' : 'span');
+            el.className = 'breadcrumb-segment';
+            if (href) el.href = href;
+            el.textContent = label;
+            crumbsContainer.appendChild(el);
+            if (idx < crumbs.length - 1) {
+                const sep = document.createElement('span');
+                sep.className = 'breadcrumb-separator';
+                sep.textContent = ' / ';
+                crumbsContainer.appendChild(sep);
+            }
+        });
+    }
+
+    function updateBreadcrumbs() {
+        const crumbsContainer = document.getElementById('breadcrumbs');
+        if (!crumbsContainer) return;
+
+        const activePage = document.querySelector('.pagination-page.active-page');
+        if (!activePage) return;
+
+        const pageId = activePage.getAttribute('data-page-id') || '';
+        if (pageId === 'title_page') {
+            renderCrumbs(crumbsContainer, ['10-K', 'Title Page'], ['#title_page', '#title_page']);
+            return;
+        }
+        if (pageId === 'table_of_contents') {
+            renderCrumbs(crumbsContainer, ['10-K', 'Table of Contents'], ['#title_page', '#table_of_contents']);
+            return;
+        }
+
+        const crumbs = ['10-K'];
+        const links = ['#title_page'];
+        const itemHeading = activePage.querySelector('h3.item-heading');
+        let partHeading = activePage.querySelector('h2.part-heading');
+
+        if (!partHeading && itemHeading) {
+            const itemKey = parseItemKeyFromHeading(itemHeading);
+            const partRoman = itemKey ? partRomanForItemKey(itemKey) : null;
+            if (partRoman) partHeading = findPartHeadingElement(partRoman);
+        }
+        if (partHeading && partHeading.id) {
+            crumbs.push(partHeading.textContent.trim());
+            links.push('#' + partHeading.id);
+        }
+
+        if (itemHeading) {
+            const numSpan = itemHeading.querySelector('.item-number');
+            let itemLabel = numSpan ? numSpan.textContent.trim() : itemHeading.textContent.trim();
+            itemLabel = itemLabel.replace(/^ITEM\s+/i, 'Item ').replace(/\.$/, '');
+            crumbs.push(itemLabel);
+            links.push('#' + itemHeading.id);
+        }
+
+        const activeLink = document.querySelector('.side-nav-link.active');
+        let currentSectionId = null;
+        if (activeLink) {
+            const href = activeLink.getAttribute('href') || '';
+            if (href.startsWith('#')) currentSectionId = href.slice(1);
+        }
+        if (currentSectionId) {
+            const sectionEl = document.getElementById(currentSectionId);
+            if (sectionEl && activePage.contains(sectionEl) && sectionEl.matches('h4.section-heading, h5, h6.section-heading')) {
+                crumbs.push(sectionEl.textContent.trim());
+                links.push('#' + sectionEl.id);
+            }
+        }
+
+        renderCrumbs(crumbsContainer, crumbs, links);
+    }
+
     function findFirstItemHeadingId(wantKey) {
         const want = String(wantKey).toUpperCase();
         const heads = document.querySelectorAll('main h3.item-heading');
@@ -454,6 +559,7 @@
         ensureQuickAccessBlock();
         buildQuickAccess();
         updatePartLabelsInNav();
+        updateBreadcrumbs();
 
         const qaToggle = document.getElementById('quick-access-toggle');
         const qaBlock = document.getElementById('quick-access');
@@ -486,8 +592,11 @@
             setTimeout(function() {
                 updatePartLabelsInNav();
                 buildQuickAccess();
+                updateBreadcrumbs();
             }, 0);
         }, true);
+
+        window.addEventListener('scroll', updateBreadcrumbs);
     }
 
     if (document.readyState === 'loading') {
