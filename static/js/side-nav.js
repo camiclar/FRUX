@@ -36,7 +36,7 @@
         const main = document.querySelector('main');
         if (!main) return;
 
-        const headings = main.querySelectorAll('h2.part-heading, h3.item-heading, h4.section-heading, h5');
+        const headings = main.querySelectorAll('h2.part-heading, h3.item-heading, h3.signatures-heading, h4.section-heading, h5');
         const navStructure = [];
         let currentH2 = null;
         let currentH3 = null;
@@ -58,7 +58,7 @@
                 currentH3 = null;
                 currentH4 = null;
                 navStructure.push(currentH2);
-            } else if (heading.tagName === 'H3' && heading.classList.contains('item-heading') && currentH2) {
+            } else if (heading.tagName === 'H3' && (heading.classList.contains('item-heading') || heading.classList.contains('signatures-heading')) && currentH2) {
                 currentH3 = {
                     element: heading,
                     id,
@@ -145,9 +145,18 @@
         }
         if (!container) return null;
 
-        const headings = container.querySelectorAll('h2.part-heading[id], h3.item-heading[id], h4.section-heading[id], h5[id]');
+        const headings = container.querySelectorAll('h2.part-heading[id], h3.item-heading[id], h3.signatures-heading[id], h4.section-heading[id], h5[id]');
         let currentSection = null;
         const scrollPosition = window.scrollY + 100;
+
+        // Override at page bottom: force the final H4 to be active for clearer navigation context.
+        const atBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 2);
+        if (atBottom) {
+            const h4s = container.querySelectorAll('h4.section-heading[id]');
+            if (h4s.length) {
+                return h4s[h4s.length - 1].id;
+            }
+        }
 
         for (let i = headings.length - 1; i >= 0; i--) {
             const heading = headings[i];
@@ -249,7 +258,7 @@
             const fragments = page.querySelectorAll(':scope .fragment');
 
             fragments.forEach(fragment => {
-                const firstTopHeading = fragment.querySelector(':scope > h2.part-heading, :scope > h3.item-heading, :scope > h4.section-heading, :scope > h5');
+                const firstTopHeading = fragment.querySelector(':scope > h2.part-heading, :scope > h3.item-heading, :scope > h3.signatures-heading, :scope > h4.section-heading, :scope > h5');
 
                 if (fragment.getAttribute('data-h4-grouped') === 'true') {
                     // keep carry signal in sync when rerun
@@ -272,7 +281,7 @@
                 // until we reach the next section boundary (H2/H3/H4).
                 if (carryFromPreviousFragment && openCard && (!firstTopHeading || firstTopHeading.tagName === 'H5')) {
                     while (fragment.firstElementChild &&
-                        !fragment.firstElementChild.matches('h2.part-heading, h3.item-heading, h4.section-heading')) {
+                        !fragment.firstElementChild.matches('h2.part-heading, h3.item-heading, h3.signatures-heading, h4.section-heading')) {
                         openCard.appendChild(fragment.firstElementChild);
                     }
                 }
