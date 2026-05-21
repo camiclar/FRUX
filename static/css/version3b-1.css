@@ -1,0 +1,75 @@
+/* Version 3B-1: 3A + Quick Access (original styling, no orange accents) */
+
+@import 'version3a.css';
+
+.quick-access {
+  flex-shrink: 0;
+  padding: 0.5rem 0.5rem 0.25rem;
+}
+
+.quick-access-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.35rem 0.25rem;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 10pt;
+  font-weight: 700;
+  color: #000000;
+  text-align: left;
+}
+
+.quick-access-title {
+  flex: 1;
+}
+
+.quick-access-chevron {
+  flex-shrink: 0;
+  font-size: 8pt;
+  line-height: 1;
+  transition: transform 0.2s ease;
+  color: #666666;
+}
+
+.quick-access:not(.quick-access-collapsed) .quick-access-chevron {
+  transform: rotate(180deg);
+}
+
+.quick-access-collapsed .quick-access-list {
+  display: none;
+}
+
+.quick-access-list {
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0 0.35rem 0.75rem;
+}
+
+.quick-access-item {
+  margin: 0;
+  padding: 0.2rem 0;
+}
+
+.quick-access-link {
+  display: block;
+  font-size: 9pt;
+  font-weight: 400;
+  color: #000000;
+  text-decoration: none;
+  line-height: 1.35;
+}
+
+.quick-access-link:hover {
+  text-decoration: underline;
+}
+
+.quick-access-divider {
+  border: none;
+  border-top: 1px solid #bdbdbd;
+  margin: 0 0.5rem 0.5rem;
+}

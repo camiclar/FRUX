@@ -145,6 +145,11 @@
         }
         if (!container) return null;
 
+        const pageId = container.getAttribute('data-page-id');
+        if (pageId === 'title_page' || pageId === 'table_of_contents') {
+            return pageId;
+        }
+
         const headings = container.querySelectorAll('h2.part-heading[id], h3.item-heading[id], h3.signatures-heading[id], h4.section-heading[id], h5[id]');
         let currentSection = null;
         const scrollPosition = window.scrollY + 100;

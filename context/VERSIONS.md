@@ -22,7 +22,7 @@ This document summarizes how each **version** of the Illinois Tool Works Form 10
 - **IDs:** Heading `id`s are scoped by fragment/page so duplicate section titles in different items resolve to distinct anchors.
 - **Version 2–specific styling:** Main column **max-width 1000px**, centered; **Roboto** and adjusted body size; **page numbers / breaks hidden** in this view.
 
-**Special grouping (shared by v2 / 3A / 3B):** Items **10–14** (Part III) are combined onto **one** pagination page; **Part IV** is its own page. Item headings still appear separately in the side nav.
+**Special grouping (shared by v2 / 3A / 3B variants):** Items **10–14** (Part III) are combined onto **one** pagination page; **Part IV** is its own page. Item headings still appear separately in the side nav.
 
 ---
 
@@ -37,22 +37,24 @@ This document summarizes how each **version** of the Illinois Tool Works Form 10
 
 ---
 
-## Version 3B (`/version/3b`)
+## Version 3B (variants)
 
-- **Base:** Same as **Version 3A** (labels, breadcrumbs, pagination, styling chain through `version3a.css`).
-- **Quick Access:** An extra block **above** the main side nav with a collapsible **“Quick Access”** header and shortcut links to high-traffic items:
-  - ITEM 1. Business  
-  - ITEM 1A. Risk Factors  
-  - ITEM 7. MD&A  
-  - ITEM 8. Financial Statements  
-  Links target the same anchors as the full nav (resolved after headings receive IDs). Same-page clicks use smooth scrolling; cross-page behavior uses the existing pagination + hash logic.
+All 3B versions share the same base as **Version 3A** (labels, breadcrumbs, pagination) plus **Quick Access** — a collapsible block above the side nav with shortcut links to high-traffic items (Item 1, 1A, 7, 8). Links use the same anchors as the full nav; same-page clicks scroll smoothly; cross-page behavior uses existing pagination + hash logic.
+
+| Variant | Route | Styling |
+| ------- | ----- | ------- |
+| **3B-1** | `/version/3b-1` | Original look (white breadcrumbs, no Quick Access background) |
+| **3B-2** | `/version/3b-2` | Light orange `#ffe6d6` on Quick Access and breadcrumbs |
+| **3B-3** | `/version/3b-3` | Starts same as 3B-1; edit `version3b-3.css` for new experiments |
+
+All variants share the same template behavior and `side-nav-v3b.js`; only the CSS file differs.
 
 ---
 
 ## Quick reference
 
 
-| Feature                        | v1  | v2     | 3A     | 3B                 |
+| Feature                        | v1  | v2     | 3A     | 3B-1 / 3B-2 / 3B-3 |
 | ------------------------------ | --- | ------ | ------ | ------------------ |
 | SEC-style page numbers in view | Yes | Hidden | Hidden | Hidden             |
 | Side nav                       | No  | Yes    | Yes    | Yes + Quick Access |
@@ -73,6 +75,8 @@ This document summarizes how each **version** of the Illinois Tool Works Form 10
 | `/version/1`  | `version1.html`  |
 | `/version/2`  | `version2.html`  |
 | `/version/3a` | `version3a.html` |
-| `/version/3b` | `version3b.html` |
+| `/version/3b-1` | `version3b-1.html` |
+| `/version/3b-2` | `version3b-2.html` |
+| `/version/3b-3` | `version3b-3.html` |
 
 

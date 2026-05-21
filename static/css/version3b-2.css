@@ -1,10 +1,11 @@
-/* Version 3B: Version 3A plus Quick Access in the side nav */
+/* Version 3B-2: 3A + Quick Access with light orange accents (#ffe6d6) */
 
 @import 'version3a.css';
 
 .quick-access {
   flex-shrink: 0;
   padding: 0.5rem 0.5rem 0.25rem;
+  background-color: #ffe6d6;
 }
 
 .quick-access-header {
@@ -70,6 +71,12 @@
 
 .quick-access-divider {
   border: none;
-  border-top: 1px solid #dddddd;
-  margin: 0.25rem 0.5rem 0.5rem;
+  border-top: 1px solid #bdbdbd;
+  margin: 0 0.5rem 0.5rem;
+}
+
+.breadcrumbs {
+  background-color: #ffe6d6;
+  border: 1px solid #bdbdbd;
+  color: #2e2e2e;
 }

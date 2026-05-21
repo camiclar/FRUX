@@ -1,0 +1,48 @@
+/* Version 3B-3: same base as 3B-1 (custom design tweaks go here) */
+
+@import 'version3b-1.css';
+
+.quick-access-header {
+    font-size: 10pt;
+    border-bottom: none;
+}
+
+.quick-access:not(.quick-access-collapsed) .quick-access-header {
+    border-bottom: 1px solid #bdbdbd;
+}
+
+.quick-access-item {
+    padding: 0.65rem 3rem 0.65rem 1rem;
+}
+
+/* Submenu borders align with parent label text (see Figma 3B-3 mockup) */
+.side-nav-submenu {
+    border-left: 1px solid #bdbdbd;
+    margin-left: 0;
+    padding-left: 0.75rem;
+}
+
+/* PART-level: shift submenu so border lines up with section title text */
+.side-nav-item.h2-item > .side-nav-submenu {
+    margin-left: 0.75rem;
+}
+
+/* Deeper submenus sit inside a padded parent; margin stays 0 so border meets parent text */
+.side-nav-submenu .side-nav-submenu {
+    margin-left: 0;
+}
+
+/* Indentation comes from submenu padding, not stacked link padding */
+.side-nav .side-nav-submenu .side-nav-link {
+    padding-left: 0;
+}
+
+/* If a side nav link is active, give its span left padding */
+.side-nav-link.active > span {
+    padding-left: 0.5rem;
+}
+
+/* In the breadcrumbs, add a hover effect to links. text decoration underline */
+.breadcrumb-segment:hover {
+    text-decoration: underline;
+}

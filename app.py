@@ -138,14 +138,35 @@ def view_version_3a():
     return render_template('version3a.html', fragments=fragments, pages=pages)
 
 
-@app.route('/version/3b')
-def view_version_3b():
-    """Display Version 3B (same as 3A plus Quick Access shortcuts in the side nav)"""
+@app.route('/version/3b-1')
+def view_version_3b_1():
+    """Version 3B-1: Quick Access without orange accent styling (before/after baseline)"""
     fragments = load_fragments()
     if not fragments:
-        return "Version 3B requires fragments. Please set up fragments first.", 404
+        return "Version 3B-1 requires fragments. Please set up fragments first.", 404
     pages = build_item_pages(fragments)
-    return render_template('version3b.html', fragments=fragments, pages=pages)
+    return render_template('version3b-1.html', fragments=fragments, pages=pages)
+
+
+@app.route('/version/3b-2')
+def view_version_3b_2():
+    """Version 3B-2: Quick Access with light orange (#ffe6d6) accents"""
+    fragments = load_fragments()
+    if not fragments:
+        return "Version 3B-2 requires fragments. Please set up fragments first.", 404
+    pages = build_item_pages(fragments)
+    return render_template('version3b-2.html', fragments=fragments, pages=pages)
+
+
+@app.route('/version/3b-3')
+def view_version_3b_3():
+    """Version 3B-3: design variant workspace (starts same as 3B-1)"""
+    fragments = load_fragments()
+    if not fragments:
+        return "Version 3B-3 requires fragments. Please set up fragments first.", 404
+    pages = build_item_pages(fragments)
+    return render_template('version3b-3.html', fragments=fragments, pages=pages)
+
 
 if __name__ == '__main__':
     print("=" * 60)
